@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-session_start();
+//session_start();
 
 //Require the autoload file
 require_once('vendor/autoload.php');
@@ -21,7 +21,7 @@ $f3->route('GET /', function () {
 //Login page route
 $f3->route('GET /login', function () {
     $view = new Template();
-    echo $view->render('views/loginPage.html');
+    echo $view->render('views/login.html');
 });
 
 
