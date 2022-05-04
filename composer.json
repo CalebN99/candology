@@ -1,0 +1,15 @@
+{
+  "name": "candology",
+  "authors": [
+    {
+      "name": "Caleb Norris",
+      "email": "norrisc129@gmail.com"
+    },
+    {
+      "name": "Zahra Madhar"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
