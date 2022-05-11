@@ -5,24 +5,37 @@ File: Login page
 
 -->
 
+<!-- Header -->
 <include href="includes/header.html"></include>
+
+<body>
 <!-- Navbar -->
 <include href="includes/navbar.html"></include>
-<body>
+
 <h1>Login page</h1>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-12 col-md-8 col-lg-5 col-xl-4 mx-auto shadow rounded-3">
+    <div class="row mt-3">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto shadow rounded-lg p-5">
             <h4 class="border-bottom">Login</h4>
             <form>
-                <label>
-                    Username:
-                    <input type="text" name="username">
-                </label>
-                <label>
-                    Password:
-                    <input type="text" name="password">
-                </label>
+                <!-- Username -->
+                <div class="row mb-1">
+                    <div class="col-4 text-right">
+                        <label for="username" class="form-text">Username:</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" id="username" name="username" class="form-control">
+                    </div>
+                </div>
+                <!-- Password -->
+                <div class="row">
+                    <div class="col-4 text-right">
+                        <label for="password" class="form-text">Password:</label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" id="password" name="password" class="form-control">
+                    </div>
+                </div>
             </form>
         </div>
     </div>
