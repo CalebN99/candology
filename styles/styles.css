@@ -1,0 +1,14 @@
+.imageBox {
+    width: 10em;
+    height: 10em;
+    background-color: gray;
+    margin: 0 auto;
+}
+
+hr {
+    color: #ad8c84;
+}
+
+li {
+    border: none !important;
+}
