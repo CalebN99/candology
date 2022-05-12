@@ -1,12 +1,34 @@
+<!--
+Groupe's name : Solo trio
+project's name:Candology website
+File: Home page
+
+  ul.navbar-nav li {
+        background-color: #ad8c84; height: 80px;
+    }
+
+background-color: #ad8c84; margin:4px;
+-->
+<style>
+    ul.navbar-nav li{
+
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ @BASE }}" >Candology</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"  data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
                 <a class="nav-link" href="login">Login</a>
+                <a class="nav-link" href="Our Collections">Our collections</a>
+                <a class="nav-link" href="About Us">About Us</a>
+                <a class="nav-link" href="Contact Us">Contact Us</a>
             </li>
 
         </ul>
