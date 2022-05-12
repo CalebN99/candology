@@ -4,6 +4,14 @@
     height: 10em;
     background-color: gray;
     margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    justify-content: center;
+}
+.imageBox img {
+    flex: 1;
 }
 
 hr {
