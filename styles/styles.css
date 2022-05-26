@@ -22,3 +22,40 @@ li {
     border: none !important;
 }
 
+
+/* createAccount view css */
+
+.accountForum {
+    background-color: #D3C0B2;
+    margin-top: 1em;
+
+    padding: .25em;
+
+}
+.accountForum h1 {
+    text-align: center;
+    padding-top: .25em;
+}
+
+.accountForum form {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.accountForum form button{
+   margin: 1em;
+}
+
+.form-row .col {
+    padding: 1em;
+}
+
+.addressForm h3 {
+    text-align: center;
+    margin-top: 1em;
+}
+
+.accountDetails {
+    width: fit-content;
+    margin: 0 auto;
+}
