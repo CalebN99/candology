@@ -28,8 +28,13 @@ $f3->route('GET /login', function () {
 });
 
 //Create Account Page
-$f3->route('GET /newAccount', function () {
+$f3->route('GET|POST /new_account', function () {
     $GLOBALS['con']->createAccount();
+});
+
+//Account Summary
+$f3->route('GET|POST /account_summary', function () {
+    $GLOBALS['con']->accountSummary();
 });
 
 

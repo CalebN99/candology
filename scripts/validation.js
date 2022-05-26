@@ -1,6 +1,6 @@
 document.getElementById("createAccountForm").onsubmit = validateAccountForm;
 
-function validateAccountForm(e)
+function validateAccountForm()
 {
 
 
@@ -31,7 +31,7 @@ function validateAccountForm(e)
     }
 
     let street = document.getElementById('street').value;
-    if (street.length < 1) {
+    if (street.length < 5) {
         document.getElementById("err-street").style.display = "block";
         valid = false;
     }
