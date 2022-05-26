@@ -27,6 +27,11 @@ $f3->route('GET /login', function () {
     $GLOBALS['con']->login();
 });
 
+//Create Account Page
+$f3->route('GET /newAccount', function () {
+    $GLOBALS['con']->createAccount();
+});
+
 
 //Run f3
 $f3->run();
