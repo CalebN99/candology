@@ -37,6 +37,11 @@ $f3->route('GET|POST /account_summary', function () {
     $GLOBALS['con']->accountSummary();
 });
 
+// Our Collections (Browse Products)
+$f3->route('GET|POST /our_collections', function() {
+    $GLOBALS['con']->ourCollections();
+});
+
 
 //Run f3
 $f3->run();

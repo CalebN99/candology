@@ -125,5 +125,10 @@ class Controller
         echo $view->render('views/accountSummary.html');
     }
 
+    function ourCollections() {
+        $view = new Template();
+        echo $view->render('views/browseProducts.html');
+    }
+
 
 }
