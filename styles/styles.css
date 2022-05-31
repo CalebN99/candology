@@ -64,3 +64,23 @@ li {
     color: red;
     display: none;
 }
+
+/***   BROWSE PRODUCTS PAGE STYLES   ***/
+/* Card rounded edges */
+.rounded-custom {
+    border-radius: 10px;
+}
+.rounded-custom-top {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+/* Card Button color */
+.btn-color {
+    background-color: #ad8c84;
+    color: white;
+}
+.btn-color:hover {
+    background-color: #8d6c64;
+    color: white;
+}

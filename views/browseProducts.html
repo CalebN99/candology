@@ -11,3 +11,49 @@
 <!-- Navbar -->
 <include href="includes/navbar.html"></include>
 
+<!-- Logo -->
+<div class="container text-center">
+    <img class="mx-auto text-center" src="images/Unknown.png" alt="logo">
+</div>
+
+<div class="container-fluid">
+    <!-- Candles Header -->
+    <div class="row">
+        <div class="col-12 text-center mt-3 mb-2">
+            <h1>Our Collections</h1>
+        </div>
+    </div>
+
+    <!-- Candles List -->
+    <div class="row">
+        <div class="col-12 col-sm-10 mx-auto border-top border-bottom pb-4 mb-5">
+            <div class="row">
+                <!-- Create List of Cards -->
+                <loop from="{{ $i = 0 }}" to="{{ @i < 10 }}" step="{{ @i++ }}">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card shadow rounded-custom border-0">
+                            <img src="images/candle_stock.jpg" class="card-img-top rounded-custom-top" alt="Basic White candle (photo unavailable)">
+                            <div class="card-body">
+                                <h5 class="card-title">Candle Example</h5>
+                                <p class="card-text">Description...</p>
+                                <a href="#" class="btn btn-color float-right">More info</a>
+                            </div>
+                        </div>
+                    </div>
+                </loop>
+                <loop from="{{ $i = 0 }}" to="{{ @i < 10 }}" step="{{ @i++ }}">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-4">
+                        <div class="card shadow rounded-custom border-0">
+                            <img src="images/diffuser_stock.jpg" class="card-img-top rounded-custom-top" alt="Basic reed diffuser (photo unavailable)">
+                            <div class="card-body">
+                                <h5 class="card-title">Diffuser Example</h5>
+                                <p class="card-text">Description...</p>
+                                <a href="#" class="btn btn-color float-right">More info</a>
+                            </div>
+                        </div>
+                    </div>
+                </loop>
+            </div>
+        </div>
+    </div>
+</div>
