@@ -20,6 +20,9 @@ $f3 = Base::instance();
 //Create an instance of the Controller class
 $con = new Controller($f3);
 
+// Create an instance of the DataLayer
+$datalayer = new DataLayer();
+
 //Define a default route
 $f3->route('GET /', function() {
 
