@@ -17,7 +17,7 @@ class User
     private $_cvv;
 
     // CONSTRUCTOR
-    function __construct($fname, $lname, $userId, $email, $street, $address2, $city, $zip, $state, $cardNum, $cardExpMonth, $cardExpYear, $cvv) {
+    public function __construct($fname, $lname, $userId, $email, $street, $address2, $city, $zip, $state, $cardNum, $cardExpMonth, $cardExpYear, $cvv) {
         $this->_fname = $fname;
         $this->_lname = $lname;
         $this->_userId = $userId;
