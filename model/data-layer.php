@@ -160,7 +160,7 @@ class DataLayer
      * @return Diffuser|bool|Candle Returns Product object if id is found,
      * false otherwise
      */
-    function getProduct(int $productId): Diffuser|bool|Candle
+    function getProduct(int $productId)
     {
         // Query database for product id
         $sql = "SELECT * FROM products WHERE productId = :id"; // TODO: Join with candles and diffusers tables

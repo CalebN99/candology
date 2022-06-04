@@ -1,0 +1,58 @@
+<!--
+    Group: Solo Trio
+    Project Name: Candology
+    File: browseProducts.html
+-->
+
+<!-- Header -->
+<include href="includes/header.html"></include>
+
+<body>
+<!-- Navbar -->
+<include href="includes/navbar.html"></include>
+
+<!-- Logo -->
+<div class="container text-center">
+    <img class="mx-auto text-center" src="images/Unknown.png" alt="logo">
+</div>
+
+<div class="container-fluid">
+    <div class="row mt-5">
+        <div class="col-12 col-sm-10 mx-auto">
+            <div class="row">
+                <div class="col-8">
+                    <!-- Product Title -->
+                    <h1 class="border-bottom pb-2">{{ @product->getProductName() }}</h1>
+
+                    <!-- Product Description -->
+                    <p class="border-bottom pb-2 mb-5">{{ @product->getProductDescription() }}</p>
+
+                    <p>${{ @product->getPrice() }}</p>
+
+                    <form>
+                        <div class="form-group">
+                            <label for="qty" class="form-label">Quantity:</label>
+                            <input type="number" class="form-range" id="qty" name="qty">
+                            <p>{{ @product->getProductQTY() }} available</p>
+                        </div>
+
+                        <button type="submit" class="btn btn-color">Add to Cart</button>
+                    </form>
+                </div>
+
+                <div class="col-4">
+                    <!-- Product Image -->
+                    <check if="{{ @product instanceof Candle }}">
+                        <true>
+                            <img src="images/candle_stock.jpg" class="w-100 rounded-custom shadow" alt="Basic White candle (photo unavailable)">
+                        </true>
+                        <false>
+                            <img src="images/diffuser_stock.jpg" class="w-100 rounded-custom shadow" alt="Basic reed diffuser (photo unavailable)">
+                        </false>
+                    </check>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

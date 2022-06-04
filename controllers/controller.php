@@ -16,12 +16,11 @@ class Controller
         echo $view->render('views/home.html');
     }
 
-    function login() {
+    function login()
+    {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-                $dataLayer = new DataLayer();
-
-                $user = $dataLayer->login($_POST['email'], $_POST['password']);
+                $user = $GLOBALS['datalayer']->login($_POST['email'], $_POST['password']);
 
 
                 if (is_array($user)) {
@@ -42,7 +41,8 @@ class Controller
         echo $view->render('views/login.html');
     }
 
-    function createAccount() {
+    function createAccount()
+    {
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valid = true;
@@ -145,20 +145,54 @@ class Controller
         echo $view->render('views/createAccount.html');
     }
 
-    function accountSummary() {
-        $dataLayer = new DataLayer();
-
-        $dataLayer->createAccount();
+    function accountSummary()
+    {
+        $GLOBALS['datalayer']->createAccount();
         $view = new Template();
         echo $view->render('views/accountSummary.html');
     }
 
-    function ourCollections() {
+    function ourCollections()
+    {
+        // Get products to display on page
+        $products = $GLOBALS['datalayer']->getProducts();
+
+        $this->_f3->set('products', $products);
+
         $view = new Template();
         echo $view->render('views/browseProducts.html');
     }
 
-    function checkout() {
+    /**
+     * Method to get a product's info to be loaded onto page. Then redirects
+     * to the view product page.
+     * @return void
+     */
+    function productPage()
+    {
+        // If request method is not post Redirect to collections
+        if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST['productId'])) {
+            header("location: our_collections");
+        }
+
+        // Get ID of product to display
+        $product = $GLOBALS['datalayer']->getProduct($_POST['productId']);
+
+        // If id product ID was not found, Redirect back to our collections
+        if ($product == false) {
+            header("location: our_collections");
+        }
+
+        // Store the product object in the hive
+        $this->_f3->set('product', $product);
+
+        // Render product page
+        $view = new Template();
+        echo $view->render('views/product.html');
+    }
+
+    function checkout()
+    {
         $view = new Template();
         echo $view->render('views/checkout.html');
     }
