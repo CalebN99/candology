@@ -34,7 +34,9 @@
                         <div class="card shadow rounded-custom border-0">
                             <img src="images/candle_stock.jpg" class="card-img-top rounded-custom-top" alt="Basic White candle (photo unavailable)">
                             <div class="card-body">
-                                <h5 class="card-title">{{ @product->getProductName() }}</h5>
+                                <h5 class="card-title">{{ @product->getProductName() }}
+                                    <span class="float-right">${{ @product->getPrice() }}</span>
+                                </h5>
                                 <p class="card-text text-truncate h-25">{{ @product->getProductDescription() }}</p>
                                 <form action="product_page" method="post">
                                     <input type="hidden" value="{{ @product->getProductId() }}" name="productId">
