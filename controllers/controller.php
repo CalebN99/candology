@@ -111,6 +111,10 @@ class Controller
                 $_SESSION['cvv'] = $_POST['cvv'];
             }
 
+            if(empty($_POST['address2'])) {
+                $_SESSION['address2'] = "";
+            }
+
 
             if ($valid) {
                 header('location: account_summary');
@@ -121,6 +125,9 @@ class Controller
     }
 
     function accountSummary() {
+        $dataLayer = new DataLayer();
+
+        $dataLayer->createAccount();
         $view = new Template();
         echo $view->render('views/accountSummary.html');
     }
