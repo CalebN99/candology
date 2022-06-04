@@ -49,6 +49,11 @@ $f3->route('GET|POST /our_collections', function() {
     $GLOBALS['con']->ourCollections();
 });
 
+// View Product
+$f3->route('GET|POST /product_page', function() {
+    $GLOBALS['con']->productPage();
+});
+
 // Checkout
 $f3->route('GET|POST /checkout', function() {
     $GLOBALS['con']->checkout();
