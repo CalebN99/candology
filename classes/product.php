@@ -11,14 +11,16 @@ class Product
     private $_productName;
     private $_productDescription;
     private $_productQTY;
+    private $_price;
 
     // CONSTRUCTOR
-    function __construct($productId, $productName, $productDescription, $productQTY)
+    function __construct($productId, $productName, $productDescription, $productQTY, $_price)
     {
         $this->_productId = $productId;
         $this->_productName = $productName;
         $this->_productDescription = $productDescription;
         $this->_productQTY = $productQTY;
+        $this->_price = $price;
     }
 
     // GET METHODS
@@ -58,4 +60,15 @@ class Product
     {
         return $this->_productQTY;
     }
+
+    /**
+     * Method to get the price of product
+     * @return string detailed product description
+     */
+    function getPrice()
+    {
+        return $this->_price;
+    }
+
+
 }
