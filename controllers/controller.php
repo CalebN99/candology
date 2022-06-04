@@ -17,6 +17,27 @@ class Controller
     }
 
     function login() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+                $dataLayer = new DataLayer();
+
+                $user = $dataLayer->login($_POST['email'], $_POST['password']);
+
+
+                if (is_array($user)) {
+                    $_SESSION['user'] = new User($user['fname'], $user['lname'], $user['userId'], $user['email'], $user['street'], $user['address2'], $user['city'], $user['zip'],
+                        $user['state'], $user['cardNum'], $user['cardExpMonth'], $user['cardExpYear'], $user['cvv']);
+                    header('location:../candology');
+                } else {
+                    $this->_f3->set('errors["login"]', 'Invalid Email or Password..');
+                }
+
+
+            }
+
+
+
+
         $view = new Template();
         echo $view->render('views/login.html');
     }

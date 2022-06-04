@@ -45,5 +45,23 @@ class DataLayer
         $statement->execute();
     }
 
+    function login($email, $password)
+    {
+
+        $sql = "SELECT * FROM `userAccounts` WHERE email = :email AND password = :password LIMIT 1";
+
+        $statement = $this->_dbh->prepare($sql);
+
+
+        $statement->bindParam(':email', $email, PDO::PARAM_STR);
+        $statement->bindParam(':password', $password, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $user = $statement->fetch();
+
+        return $user;
+    }
+
 
 }

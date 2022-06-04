@@ -17,14 +17,17 @@ File: Login page
     <div class="row mt-3">
         <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4 mx-auto shadow rounded-lg p-5">
             <h4 class="border-bottom">Login</h4>
-            <form>
+            <form action="#" method="POST">
                 <!-- Username -->
+                <check if="{{ isset(@errors['login']) }}">
+                    <span class="text-danger">{{ @errors['login'] }}</span>
+                </check>
                 <div class="row mb-1">
                     <div class="col-4 text-right">
-                        <label for="username" class="form-text">Username:</label>
+                        <label for="email" class="form-text">Email:</label>
                     </div>
                     <div class="col-8">
-                        <input type="text" id="username" name="username" class="form-control">
+                        <input type="text" id="email" name="email" class="form-control">
                     </div>
                 </div>
                 <!-- Password -->
@@ -36,6 +39,7 @@ File: Login page
                         <input type="text" id="password" name="password" class="form-control">
                     </div>
                 </div>
+                <button type="submit">Login</button>
             </form>
         </div>
     </div>

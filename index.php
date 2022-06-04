@@ -27,7 +27,7 @@ $f3->route('GET /', function() {
 });
 
 //Login page route
-$f3->route('GET /login', function () {
+$f3->route('GET|POST /login', function () {
     $GLOBALS['con']->login();
 });
 
