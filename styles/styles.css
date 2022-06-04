@@ -84,3 +84,15 @@ li {
     background-color: #8d6c64;
     color: white;
 }
+
+
+
+/* CHECKOUT FORM PAGE */
+#checkoutForm {
+    width: 100%;
+    margin: 0 auto;
+}
+
+#formRow {
+    magin-top: .5em;
+}

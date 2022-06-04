@@ -27,7 +27,7 @@ class Controller
             $valid = true;
 
             // Validating first name
-            if (strlen($_POST['fname']) < 2) {
+            if (validFName($_POST['fname'])) {
                 $this->_f3->set('errors["fname"]', 'Valid first name required');
                 $valid = false;
             } else {
@@ -35,7 +35,7 @@ class Controller
             }
 
             // Validating last name
-            if (strlen($_POST['lname']) < 2) {
+            if (validLName($_POST['lname'])) {
                 $this->_f3->set('errors["lname"]', 'Valid last name required');
                 $valid = false;
             } else {
@@ -44,7 +44,7 @@ class Controller
 
             // Validating email
             $email = $_POST['email'];
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            if (!validEmail($email)) {
                 $this->_f3->set('errors["email"]', 'Valid email required');
                 $valid = false;
             } else {
@@ -52,21 +52,21 @@ class Controller
             }
 
             // Validating password
-            if (strlen($_POST['password']) < 8) {
+            if (validPassword($_POST['password'])) {
                 $this->_f3->set('errors["password"]', 'Valid password required');
                 $valid = false;
             } else {
                 $_SESSION['password'] = $_POST['password'];
             }
             // Validating street address
-            if (strlen($_POST['street']) < 5) {
+            if (validStreet($_POST['street'])) {
                 $this->_f3->set('errors["street"]', 'Valid street address required');
                 $valid = false;
             } else {
                 $_SESSION['street'] = $_POST['street'];
             }
             // Validating city
-            if (strlen($_POST['city']) < 3) {
+            if (validCity($_POST['city'])) {
                 $this->_f3->set('errors["city"]', 'Valid city required');
                 $valid = false;
             } else {
@@ -74,37 +74,37 @@ class Controller
             }
 
             // Validating state
-
+            $_SESSION['state'] = $_POST['state'];
             // Validating zip
-            if ($_POST['zip'] < 1) {
+            if (validZip($_POST['zip'])) {
                 $this->_f3->set('errors["zip"]', 'Valid zip required');
                 $valid = false;
             } else {
                 $_SESSION['zip'] = $_POST['zip'];
             }
             // Validating card number
-            if ($_POST['cardNum'] != 16) {
+            if (validCardNum($_POST['cardNum'])) {
                 $this->_f3->set('errors["cardNum"]', 'Valid card number required');
                 $valid = false;
             } else {
                 $_SESSION['cardNum'] = $_POST['cardNum'];
             }
             // Validating exp month
-            if ($_POST['expMonth'] < 1 || $_POST['expMonth'] > 12 ) {
+            if (validExpMonth($_POST['expMonth'])) {
                 $this->_f3->set('errors["expMonth"]', 'Valid exp month required');
                 $valid = false;
             } else {
                 $_SESSION['expMonth'] = $_POST['expMonth'];
             }
             // Validating exp year
-            if ($_POST['expYear'] < 2022 ) {
+            if (validExpYear($_POST['expYear'])) {
                 $this->_f3->set('errors["expYear"]', 'Valid exp year required');
                 $valid = false;
             } else {
                 $_SESSION['expYear'] = $_POST['expYear'];
             }
             // Validating cvv
-            if ($_POST['cvv'] < 100 || $_POST['cv'] > 9999 ) {
+            if (validCVV($_POST['cvv'])) {
                 $this->_f3->set('errors["cvv"]', 'Valid cvv required');
                 $valid = false;
             } else {
@@ -128,6 +128,11 @@ class Controller
     function ourCollections() {
         $view = new Template();
         echo $view->render('views/browseProducts.html');
+    }
+
+    function checkout() {
+        $view = new Template();
+        echo $view->render('views/checkout.html');
     }
 
 

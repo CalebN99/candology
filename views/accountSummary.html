@@ -7,6 +7,16 @@
 <div class="container accountForum">
    <h1>Account Summary</h1>
     <hr>
+    <p><span>Name: </span>{{@SESSION.fname}} {{@SESSION.lname}}</p>
+    <p><span>Email: </span>{{@SESSION.email}}</p>
+    <p><span>Street: </span>{{@SESSION.street}}</p>
+    <p><span>City: </span>{{@SESSION.city}}</p>
+    <p><span>State: </span>{{@SESSION.state}}</p>
+    <p><span>Zip: </span>{{@SESSION.zip}}</p>
+    <p><span>Card Ending in: </span>{{@SESSION.cardNum}}</p>
+
+    <button><a class="nav-link" href="login">Login</a></button>
+
 </div>
 
 </body>

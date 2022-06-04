@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
@@ -9,6 +8,10 @@ ini_set("display_errors", 1);
 
 //Require the autoload file
 require_once('vendor/autoload.php');
+
+require_once('model/validation.php');
+
+session_start();
 
 //Create an instance of the Base class
 $f3 = Base::instance();
@@ -40,6 +43,11 @@ $f3->route('GET|POST /account_summary', function () {
 // Our Collections (Browse Products)
 $f3->route('GET|POST /our_collections', function() {
     $GLOBALS['con']->ourCollections();
+});
+
+// Checkout
+$f3->route('GET|POST /checkout', function() {
+    $GLOBALS['con']->checkout();
 });
 
 
