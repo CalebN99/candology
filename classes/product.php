@@ -14,7 +14,7 @@ class Product
     private $_price;
 
     // CONSTRUCTOR
-    function __construct($productId, $productName, $productDescription, $productQTY, $_price)
+    function __construct($productId, $productName, $productDescription, $productQTY, $price)
     {
         $this->_productId = $productId;
         $this->_productName = $productName;
