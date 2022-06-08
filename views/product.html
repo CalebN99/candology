@@ -26,14 +26,21 @@
 
                     <!-- Product Description -->
                     <p class="border-bottom pb-2 mb-5">{{ @product->getProductDescription() }}</p>
+                    <check if="{{ isset(@errors['noProd']) }}">
+                        <span class="text-danger">{{ @errors['noProd'] }}</span>
+                    </check>
 
                     <p>${{ @product->getPrice() }}</p>
 
-                    <form>
+                    <form action="#" method="POST">
                         <div class="form-group">
                             <label for="qty" class="form-label">Quantity:</label>
                             <input type="number" class="form-range" id="qty" name="qty">
+                            <check if="{{ isset(@errors['qty']) }}">
+                                <span class="text-danger">{{ @errors['qty'] }}</span>
+                            </check>
                             <p>{{ @product->getProductQTY() }} available</p>
+                            <input type="hidden" name="id" value="{{ @product->getProductId() }}">
                         </div>
 
                         <button type="submit" class="btn btn-color">Add to Cart</button>

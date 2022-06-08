@@ -14,6 +14,10 @@
     flex: 1;
 }
 
+/*.loginNav {*/
+/*    float: right;*/
+/*}*/
+
 hr {
     color: #ad8c84;
 }
@@ -88,11 +92,22 @@ li {
 
 
 /* CHECKOUT FORM PAGE */
-#checkoutForm {
-    width: 100%;
+.checkoutForm {
+    display: block;
+    width: 90%;
     margin: 0 auto;
 }
 
+.checkForm {
+    margin: 0 auto;
+}
 #formRow {
     magin-top: .5em;
+}
+
+#checkoutForm {
+    background-color: #D3C0B2;
+    margin-top: 1em;
+
+    padding: 1em;
 }

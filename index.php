@@ -20,6 +20,8 @@ $f3 = Base::instance();
 //Create an instance of the Controller class
 $con = new Controller($f3);
 
+$valid = new Validation();
+
 // Create an instance of the DataLayer
 $datalayer = new DataLayer();
 

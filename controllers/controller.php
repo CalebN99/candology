@@ -26,6 +26,7 @@ class Controller
                 if (is_array($user)) {
                     $_SESSION['user'] = new User($user['fname'], $user['lname'], $user['userId'], $user['email'], $user['street'], $user['address2'], $user['city'], $user['zip'],
                         $user['state'], $user['cardNum'], $user['cardExpMonth'], $user['cardExpYear'], $user['cvv']);
+                    $_SESSION['cart'] = new Cart();
                     header('location:../candology');
                 } else {
                     $this->_f3->set('errors["login"]', 'Invalid Email or Password..');
@@ -33,8 +34,6 @@ class Controller
 
 
             }
-
-
 
 
         $view = new Template();
@@ -48,7 +47,7 @@ class Controller
             $valid = true;
 
             // Validating first name
-            if (validFName($_POST['fname'])) {
+            if ($GLOBALS['valid']->validFName($_POST['fname'])) {
                 $this->_f3->set('errors["fname"]', 'Valid first name required');
                 $valid = false;
             } else {
@@ -56,7 +55,8 @@ class Controller
             }
 
             // Validating last name
-            if (validLName($_POST['lname'])) {
+
+            if ($GLOBALS['valid']->validLName($_POST['lname'])) {
                 $this->_f3->set('errors["lname"]', 'Valid last name required');
                 $valid = false;
             } else {
@@ -65,7 +65,7 @@ class Controller
 
             // Validating email
             $email = $_POST['email'];
-            if (!validEmail($email)) {
+            if (!$GLOBALS['valid']->validEmail($email)) {
                 $this->_f3->set('errors["email"]', 'Valid email required');
                 $valid = false;
             } else {
@@ -73,21 +73,24 @@ class Controller
             }
 
             // Validating password
-            if (validPassword($_POST['password'])) {
+
+            if ($GLOBALS['valid']->validPassword($_POST['password'])) {
                 $this->_f3->set('errors["password"]', 'Valid password required');
                 $valid = false;
             } else {
                 $_SESSION['password'] = $_POST['password'];
             }
             // Validating street address
-            if (validStreet($_POST['street'])) {
+
+            if ($GLOBALS['valid']->validStreet($_POST['street'])) {
                 $this->_f3->set('errors["street"]', 'Valid street address required');
                 $valid = false;
             } else {
                 $_SESSION['street'] = $_POST['street'];
             }
             // Validating city
-            if (validCity($_POST['city'])) {
+
+            if (  $GLOBALS['valid']->validCity($_POST['city'])) {
                 $this->_f3->set('errors["city"]', 'Valid city required');
                 $valid = false;
             } else {
@@ -97,35 +100,40 @@ class Controller
             // Validating state
             $_SESSION['state'] = $_POST['state'];
             // Validating zip
-            if (validZip($_POST['zip'])) {
+
+            if ($GLOBALS['valid']->validZip($_POST['zip'])) {
                 $this->_f3->set('errors["zip"]', 'Valid zip required');
                 $valid = false;
             } else {
                 $_SESSION['zip'] = $_POST['zip'];
             }
             // Validating card number
-            if (validCardNum($_POST['cardNum'])) {
+
+            if ($GLOBALS['valid']->validCardNum($_POST['cardNum'])) {
                 $this->_f3->set('errors["cardNum"]', 'Valid card number required');
                 $valid = false;
             } else {
                 $_SESSION['cardNum'] = $_POST['cardNum'];
             }
             // Validating exp month
-            if (validExpMonth($_POST['expMonth'])) {
+
+            if ($GLOBALS['valid']->validExpMonth($_POST['expMonth'])) {
                 $this->_f3->set('errors["expMonth"]', 'Valid exp month required');
                 $valid = false;
             } else {
                 $_SESSION['expMonth'] = $_POST['expMonth'];
             }
             // Validating exp year
-            if (validExpYear($_POST['expYear'])) {
+
+            if ($GLOBALS['valid']->validExpYear($_POST['expYear'])) {
                 $this->_f3->set('errors["expYear"]', 'Valid exp year required');
                 $valid = false;
             } else {
                 $_SESSION['expYear'] = $_POST['expYear'];
             }
             // Validating cvv
-            if (validCVV($_POST['cvv'])) {
+
+            if ($GLOBALS['valid']->validCVV($_POST['cvv'])) {
                 $this->_f3->set('errors["cvv"]', 'Valid cvv required');
                 $valid = false;
             } else {
@@ -171,20 +179,51 @@ class Controller
     function productPage()
     {
         // If request method is not post Redirect to collections
-        if ($_SERVER['REQUEST_METHOD'] != "POST" || !isset($_POST['productId'])) {
+        if ($_SERVER['REQUEST_METHOD'] != "POST") {
             header("location: our_collections");
         }
+
 
         // Get ID of product to display
-        $product = $GLOBALS['datalayer']->getProduct($_POST['productId']);
-
-        // If id product ID was not found, Redirect back to our collections
-        if ($product == false) {
-            header("location: our_collections");
+        if (isset($_POST['productId'])) {
+            $product = $GLOBALS['datalayer']->getProduct($_POST['productId']);
+            if ($product == false) {
+                header("location: our_collections");
+            }
+            $_SESSION['prodView'] = $product;
         }
 
+
+
+        // If Post and ID set, add to cart
+        if (isset($_POST['qty']) && isset($_POST['id'])) {
+            $prod = $GLOBALS['datalayer']->getProduct($_POST['id']);
+
+            if ($prod == false) {
+                $this->_f3->set('errors["noProd"]', 'Product not found');
+            } else {
+                $_SESSION['prodView'] = $prod;
+            }
+
+            if ($_POST['qty'] < 1) {
+                $this->_f3->set('errors["qty"]', 'Invalid Quantity');
+            } else if ($_POST['qty'] > $prod->getProductQTY()) {
+                $this->_f3->set('errors["qty"]', 'Requested quantity not available');
+            }
+           else {
+                $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty']);
+                var_dump($_SESSION['cart']->getCart());
+            }
+
+        }
+
+        $this->_f3->set('product', $_SESSION['prodView']);
+
+        // If id product ID was not found, Redirect back to our collections
+
+
         // Store the product object in the hive
-        $this->_f3->set('product', $product);
+
 
         // Render product page
         $view = new Template();

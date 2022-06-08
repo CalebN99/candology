@@ -22,7 +22,7 @@
                     <label for="lname">Last Name:</label><br>
                     <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter last name">
                     <span class="err" id="err-lname">Please enter last name</span>
-                    <check if="{{ isset(@errors['fname']) }}">
+                    <check if="{{ isset(@errors['lname']) }}">
                         <span class="text-danger">{{ @errors['lname'] }}</span>
                     </check>
                 </div>
