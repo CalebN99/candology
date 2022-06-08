@@ -32,5 +32,15 @@ class Cart
          return $total;
     }
 
+    function getTotalProducts() {
+        $total = 0;
+        foreach ($this->_cart as $order) {
+
+            $total +=  $order['qty'];
+        }
+
+        return $total;
+    }
+
 
 }

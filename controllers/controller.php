@@ -43,6 +43,7 @@ class Controller
     function createAccount()
     {
 
+
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valid = true;
 
@@ -149,6 +150,9 @@ class Controller
                 header('location: account_summary');
             }
         }
+
+        $this->_f3->set('states', DataLayer::getStatesMap());
+
         $view = new Template();
         echo $view->render('views/createAccount.html');
     }
@@ -232,6 +236,8 @@ class Controller
 
     function checkout()
     {
+        $this->_f3->set('states', DataLayer::getStatesMap());
+
         $view = new Template();
         echo $view->render('views/checkout.html');
     }
