@@ -175,6 +175,19 @@ class Controller
         echo $view->render('views/browseProducts.html');
     }
 
+    function aboutUs()
+    {
+        $view = new Template();
+        echo $view->render('views/about_us.html');
+    }
+
+
+    function contactUs()
+    {
+        $view = new Template();
+        echo $view->render('views/contact_us.html');
+    }
+
     /**
      * Method to get a product's info to be loaded onto page. Then redirects
      * to the view product page.

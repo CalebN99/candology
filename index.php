@@ -51,6 +51,16 @@ $f3->route('GET|POST /our_collections', function() {
     $GLOBALS['con']->ourCollections();
 });
 
+
+$f3->route('GET|POST /about_us', function() {
+    $GLOBALS['con']->aboutUs();
+});
+
+$f3->route('GET|POST /contact_us', function() {
+    $GLOBALS['con']->contactUs();
+});
+
+
 // View Product
 $f3->route('GET|POST /product_page', function() {
     $GLOBALS['con']->productPage();
