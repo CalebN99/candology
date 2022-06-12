@@ -33,9 +33,10 @@
                     <p>${{ @product->getPrice() }}</p>
 
                     <form action="#" method="POST">
+                        <!-- Quantity -->
                         <div class="form-group">
                             <label for="qty" class="form-label">Quantity:</label>
-                            <input type="number" class="form-range" id="qty" name="qty">
+                            <input type="number" class="form-range" id="qty" name="qty" value="1">
                             <check if="{{ isset(@errors['qty']) }}">
                                 <span class="text-danger">{{ @errors['qty'] }}</span>
                             </check>

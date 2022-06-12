@@ -1,4 +1,26 @@
 
+/* ===== FONTS ===== */
+.font-arapey {
+    display: block;
+    font-family:Arapey;
+    font-style: italic;
+    font-size: 1em;
+    font-weight: bold;
+    color: rgb(196, 165, 147);
+}
+
+/* ===== NAVBAR ===== */
+ul.navbar-nav li{
+    display: flex;
+    justify-content: center;
+}
+
+.right-0 {
+    position: absolute;
+    right: 10px;
+}
+
+/* ===== Images on Homepage ===== */
 .imageBox {
     width: 10em;
     height: 10em;
@@ -14,9 +36,6 @@
     flex: 1;
 }
 
-/*.loginNav {*/
-/*    float: right;*/
-/*}*/
 
 hr {
     color: #ad8c84;

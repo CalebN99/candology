@@ -20,29 +20,33 @@ class Controller
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-                $user = $GLOBALS['datalayer']->login($_POST['email'], $_POST['password']);
+            $user = $GLOBALS['datalayer']->login($_POST['email'], $_POST['password']);
 
-
-                if (is_array($user)) {
-                    $_SESSION['user'] = new User($user['fname'], $user['lname'], $user['userId'], $user['email'], $user['street'], $user['address2'], $user['city'], $user['zip'],
-                        $user['state'], $user['cardNum'], $user['cardExpMonth'], $user['cardExpYear'], $user['cvv']);
-                    $_SESSION['cart'] = new Cart();
-                    header('location:../candology');
-                } else {
-                    $this->_f3->set('errors["login"]', 'Invalid Email or Password..');
-                }
-
-
+            if ($user instanceof User) {
+                $_SESSION['user'] = $user;
+                header('location:../candology');
+            } else {
+                $this->_f3->set('errors["login"]', 'Invalid Email or Password..');
             }
-
+        }
 
         $view = new Template();
         echo $view->render('views/login.html');
     }
 
+
+    /**
+     * Method to logout the user. Clears the session (cart and user data)
+     */
+    function logout()
+    {
+        session_destroy();
+        header('Location: ' . $this->_f3['BASE']);
+    }
+
+
     function createAccount()
     {
-
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $valid = true;
@@ -52,7 +56,7 @@ class Controller
                 $this->_f3->set('errors["fname"]', 'Valid first name required');
                 $valid = false;
             } else {
-                $_SESSION['fname'] = $_POST['fname'];
+                $_SESSION['fname'] = ucfirst($_POST['fname']);
             }
 
             // Validating last name
@@ -61,7 +65,7 @@ class Controller
                 $this->_f3->set('errors["lname"]', 'Valid last name required');
                 $valid = false;
             } else {
-                $_SESSION['lname'] = $_POST['lname'];
+                $_SESSION['lname'] = ucfirst($_POST['lname']);
             }
 
             // Validating email
@@ -145,7 +149,6 @@ class Controller
                 $_SESSION['address2'] = "";
             }
 
-
             if ($valid) {
                 header('location: account_summary');
             }
@@ -159,16 +162,31 @@ class Controller
 
     function accountSummary()
     {
+        // Create Account
         $GLOBALS['datalayer']->createAccount();
+
+        // Login to account
+        $user = $GLOBALS['datalayer']->login($_SESSION['email'], $_SESSION['password']);
+        unset($_SESSION['password']);
+
+        if ($user instanceof User) {
+            $_SESSION['user'] = $user;
+        } else {
+            $this->_f3->set('errors["login"]', 'Error Logging in');
+        }
+
         $view = new Template();
         echo $view->render('views/accountSummary.html');
     }
 
-    function ourCollections()
+    /**
+     * Method to Route the user to the browse products page. Displays all
+     * passed products.
+     *
+     * @return void
+     */
+    function ourCollections($products)
     {
-        // Get products to display on page
-        $products = $GLOBALS['datalayer']->getProducts();
-
         $this->_f3->set('products', $products);
 
         $view = new Template();
@@ -200,18 +218,17 @@ class Controller
             header("location: our_collections");
         }
 
-
+        // LOADING PAGE (First time)
         // Get ID of product to display
         if (isset($_POST['productId'])) {
             $product = $GLOBALS['datalayer']->getProduct($_POST['productId']);
-            if ($product == false) {
-                header("location: our_collections");
-            }
+
+            // If id product ID was not found, $product == false
             $_SESSION['prodView'] = $product;
         }
 
 
-
+        // ADD TO CART IS CLICKED
         // If Post and ID set, add to cart
         if (isset($_POST['qty']) && isset($_POST['id'])) {
             $prod = $GLOBALS['datalayer']->getProduct($_POST['id']);
@@ -227,32 +244,60 @@ class Controller
             } else if ($_POST['qty'] > $prod->getProductQTY()) {
                 $this->_f3->set('errors["qty"]', 'Requested quantity not available');
             }
-           else {
-                $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty']);
-                var_dump($_SESSION['cart']->getCart());
-            }
+            else {
+                // Create instance of cart if it doesn't exist
+                if (!isset($_SESSION['cart'])) {
+                    $_SESSION['cart'] = new Cart();
+                }
 
+                // Add product/s to cart
+                $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty']);
+            }
         }
 
-        $this->_f3->set('product', $_SESSION['prodView']);
+        // Redirect to our Collections if product id is invalid
+        if ($_SESSION['prodView'] == false) {
+            header('location: our_collections');
+        }
+        else {
+            // Store the product object in the hive
+            $this->_f3->set('product', $_SESSION['prodView']);
 
-        // If id product ID was not found, Redirect back to our collections
-
-
-        // Store the product object in the hive
-
-
-        // Render product page
-        $view = new Template();
-        echo $view->render('views/product.html');
+            // Render product page
+            $view = new Template();
+            echo $view->render('views/product.html');
+        }
     }
 
+    /**
+     * @return void
+     */
     function checkout()
     {
-        $this->_f3->set('states', DataLayer::getStatesMap());
+        // Check if user is has account/is logged in
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['createAccOnCheck'] = true;
+            header('location: new_account');
+        }
+        // Checks if Order is being placed
+        else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Only place order if cart exists
+            if (isset($_SESSION['cart'])) {
+                $GLOBALS['datalayer']->placeOrder();
+            }
 
-        $view = new Template();
-        echo $view->render('views/checkout.html');
+            // Clear Cart
+            $_SESSION['cart'] = new Cart();
+
+            // Redirect to home
+            header('Location: ' . $this->_f3['BASE']);
+        }
+        else {
+            $this->_f3->set('states', DataLayer::getStatesMap());
+
+            $view = new Template();
+            echo $view->render('views/checkout.html');
+        }
     }
 
 

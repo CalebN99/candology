@@ -6,23 +6,25 @@ class Cart
     private $_cart;
 
 
-//    function __construct() {
+//    function __construct()
+//    {
 //        $this->_cart = (array) null;
 //    }
 //
 
-    function addProduct($id, $qty) {
+    function addProduct($id, $qty)
+    {
         $prod = $GLOBALS['datalayer']->getProduct($id);
         $this->_cart[] = ["prod"=>$prod, "qty"=>$qty];
-
     }
 
-    function getCart() {
-
+    function getCart()
+    {
         return $this->_cart;
     }
 
-    function getTotal() {
+    function getTotal()
+    {
         $total = 0;
          foreach ($this->_cart as $order) {
 
@@ -32,7 +34,8 @@ class Cart
          return $total;
     }
 
-    function getTotalProducts() {
+    function getTotalProducts()
+    {
         $total = 0;
         foreach ($this->_cart as $order) {
 
@@ -40,6 +43,15 @@ class Cart
         }
 
         return $total;
+    }
+
+    /**
+     * Method to check if the cart has any items in it.
+     * @return bool True if cart is empty, false otherwise
+     */
+    function isEmpty()
+    {
+        return empty($this->_cart);
     }
 
 

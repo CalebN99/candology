@@ -5,21 +5,6 @@ File: Home page
 
 -->
 
-<style>
-
-
-    h4 {
-        display: block;
-        font-family:Arapey;
-        font-style: italic;
-        font-size: 1em;
-        font-weight: bold;
-        color: rgb(196, 165, 147);
-
-    }
-
-</style>
-
 <!-- Header -->
 <include href="includes/header.html"></include>
 
@@ -34,26 +19,30 @@ File: Home page
         <h3> Welcome, {{ @SESSION.user->getFName() }}</h3>
     </check>
     <img class="mx-auto text-center" src="images/Unknown.png" alt="logo">
-    <h4>Awaken your senses.. </h4>
+    <h4 class="font-arapey">Awaken your senses.. </h4>
 
     <p>Here at Candology we provide the best soy candles in the Seattle area powered by our very own ecommerce platform!</p>
     <ul class="list-inline list-group-horizontal">
         <li class="list-group-item">
             <div>
-                <div class="imageBox">
-                    <img src="images/candle.jpg">
-                </div>
-                <p>Candles</p>
-                <hr>
+                <a href="browse_candles" class="text-decoration-none text-dark">
+                    <div class="imageBox">
+                        <img src="images/candle.jpg" alt="Candle being lit with a match">
+                    </div>
+                    <p>Candles</p>
+                    <hr>
+                </a>
             </div>
         </li>
         <li class="list-group-item">
             <div>
-                <div class="imageBox">
-                    <img src="images/diffuser.jpg">
-                </div>
-                <p>Diffusers</p>
-                <hr>
+                <a href="browse_diffusers" class="text-decoration-none text-dark">
+                    <div class="imageBox">
+                        <img src="images/diffuser.jpg" alt="Reed diffusers in oil">
+                    </div>
+                    <p>Diffusers</p>
+                    <hr>
+                </a>
             </div>
         </li>
     </ul>

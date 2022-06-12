@@ -52,7 +52,6 @@ class DataLayer
 
         $statement = $this->_dbh->prepare($sql);
 
-
         $statement->bindParam(':email', $email, PDO::PARAM_STR);
         $statement->bindParam(':password', $password, PDO::PARAM_STR);
 
@@ -60,7 +59,13 @@ class DataLayer
 
         $user = $statement->fetch();
 
-        return $user;
+        if (!empty($user)) {
+            return new User($user['fname'], $user['lname'], $user['userId'], $user['email'],
+                $user['street'], $user['address2'], $user['city'], $user['zip'], $user['state'],
+                $user['cardNum'], $user['cardExpMonth'], $user['cardExpYear'], $user['cvv']);
+        }
+
+        return false;
     }
 
     /**
@@ -85,7 +90,10 @@ class DataLayer
     function getCandles(): array
     {
         // Query database for Candles
-        $sql = "SELECT * FROM products WHERE productType = 'candle'"; // TODO: Join with candles table for scent
+        $sql = "SELECT * FROM products
+                INNER JOIN candles ON products.productId = candles.productId
+                WHERE productType = 'candle'";
+
         $statement = $this->_dbh->prepare($sql);
         $statement->execute();
 
@@ -102,9 +110,9 @@ class DataLayer
                 $desc = $row['productDesc'];
                 $qty = $row['productQTY'];
                 $price = $row['price'];
-                $scent = $row['scent'];
+                $burntime = $row['burnTime'];
 
-                $candle = new Candle($id, $name, $desc, $qty, $price, $scent);
+                $candle = new Candle($id, $name, $desc, $qty, $price, $burntime);
 
                 // Add to output array
                 $candles[] = $candle;
@@ -121,7 +129,9 @@ class DataLayer
     function getDiffusers(): array
     {
         // Query database for Diffusers
-        $sql = "SELECT * FROM products WHERE productType = 'diffuser'"; // TODO: Join with diffusers table for size
+        $sql = "SELECT * FROM products
+                WHERE productType = 'diffuser'";
+
         $statement = $this->_dbh->prepare($sql);
         $statement->execute();
 
@@ -138,9 +148,9 @@ class DataLayer
                 $desc = $row['productDesc'];
                 $qty = $row['productQTY'];
                 $price = $row['price'];
-                $size = $row['size'];
+                $scent = $row['scent'];
 
-                $diffuser = new Diffuser($id, $name, $desc, $qty, $price, $size);
+                $diffuser = new Diffuser($id, $name, $desc, $qty, $price, $scent);
 
                 // Add to output array
                 $diffusers[] = $diffuser;
@@ -162,42 +172,124 @@ class DataLayer
      */
     function getProduct(int $productId)
     {
-        // Query database for product id
-        $sql = "SELECT * FROM products WHERE productId = :id"; // TODO: Join with candles and diffusers tables
-
+        // Query to find product type
+        $sql = "SELECT productType FROM products WHERE productId = :id";
         $statement = $this->_dbh->prepare($sql);
-
         $statement->bindParam(':id', $productId);
-
         $statement->execute();
 
         $row = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if (!empty($row)) {
-            if ($row['productType'] == "candle") {
-                $id = $row['productId'];
-                $name = $row['productName'];
-                $desc = $row['productDesc'];
-                $qty = $row['productQTY'];
-                $price = $row['price'];
-                $scent = $row['scent'];
+        // Query database for product using specified type
+        if ($row['productType'] == 'candle') {
+            // Query database for product id
+            $sql = "SELECT * FROM products 
+                INNER JOIN candles ON products.productId = candles.productId
+                WHERE products.productId = :id";
 
-                return new Candle($id, $name, $desc, $qty, $price, $scent);
-            }
-            else if ($row['productType'] == "diffuser") {
-                $id = $row['productId'];
-                $name = $row['productName'];
-                $desc = $row['productDesc'];
-                $qty = $row['productQTY'];
-                $price = $row['price'];
-                $size = $row['size'];
+            $statement = $this->_dbh->prepare($sql);
+            $statement->bindParam(':id', $productId);
+            $statement->execute();
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
 
-                return new Diffuser($id, $name, $desc, $qty, $price, $size);
-            }
+            $id = $row['productId'];
+            $name = $row['productName'];
+            $desc = $row['productDesc'];
+            $qty = $row['productQTY'];
+            $price = $row['price'];
+            $burntime = $row['burnTime'];
+
+            return new Candle($id, $name, $desc, $qty, $price, $burntime);
         }
+        else if ($row['productType'] == 'diffuser') {
+            // Query database for product id
+            $sql = "SELECT * FROM products 
+                WHERE productId = :id";
+
+            $statement = $this->_dbh->prepare($sql);
+            $statement->bindParam(':id', $productId);
+            $statement->execute();
+            $row = $statement->fetch(PDO::FETCH_ASSOC);
+
+            $id = $row['productId'];
+            $name = $row['productName'];
+            $desc = $row['productDesc'];
+            $qty = $row['productQTY'];
+            $price = $row['price'];
+            $scent = "SCENT";
+
+            return new Diffuser($id, $name, $desc, $qty, $price, $scent);
+        }
+
+        // Query was unsuccessful
         return false;
     }
 
+    /**
+     * Method to create place an order and store order information in the
+     * database. Creates an order and then stores ordered products in
+     * respective tables.
+     * @return void
+     */
+    function placeOrder()
+    {
+        // Add order to the database
+        $sql = "INSERT INTO orders(`customer_id`, `total_price`, `address`, `name`,`payment`, `fulfilled`) 
+                VALUES (:userID,:totalPrice,:address,:userName,:payment, false)";
+        $statement = $this->_dbh->prepare($sql);
+
+        // Bind Parameters
+        $user = $_SESSION['user'];
+        $cart = $_SESSION['cart'];
+
+        $address = $user->getStreet()." ".$user->getAddress2()." ".$user->getCity().", ".$user->getState()." ".
+            $user->getZip();
+        $payment = $user->getCardNum()." ".$user->getCardExpMonth()." ".$user->getCardExpYear()." ".$user->getCVV();
+        $name = $user->getFName()." ".$user->getLName();
+
+        $statement->bindParam(':userID', $_SESSION['user']->getuserID(), PDO::PARAM_INT);
+        $statement->bindParam(':totalPrice', $cart->getTotal(), PDO::PARAM_STR);
+        $statement->bindParam(':address', $address, PDO::PARAM_STR);
+        $statement->bindParam(':userName', $name, PDO::PARAM_STR);
+        $statement->bindParam(':payment', $payment, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        $orderID = $this->_dbh->lastInsertId();
+
+        // Add Products to OrderedProducts table
+        $products = $cart->getCart();
+        foreach($products as $product) {
+            if ($product['prod'] instanceof Diffuser) {
+                $sql = "INSERT INTO orderedProducts(`order_id`, `product_id`, `qty`, `productDetails`) 
+                VALUES (:orderID, :productID, :qty, :details)";
+            }
+            else {
+                $sql = "INSERT INTO orderedProducts(`order_id`, `product_id`, `qty`) 
+                VALUES (:orderID, :productID, :qty)";
+            }
+
+            $statement = $this->_dbh->prepare($sql);
+
+            $productID = $product['prod']->getProductId();
+
+            $statement->bindParam(':orderID', $orderID, PDO::PARAM_INT);
+            $statement->bindParam(':productID', $productID, PDO::PARAM_INT);
+            $statement->bindParam(':qty', $product['qty'], PDO::PARAM_INT);
+
+            if ($product['prod'] instanceof Diffuser) {
+                $scent = $product['prod']->getScent();
+                $statement->bindParam(':details', $scent);
+            }
+
+            $statement->execute();
+        }
+    }
+
+    /**
+     * Method to get an array of states and their abbreviations.
+     * @return string[] Map of state abbriviations to display name
+     */
     static function getStatesMap()
     {
         return ["al"=>"Alabama", "ak"=>"Alaska", "az"=>"Arizona", "ar"=>"Arkansas",

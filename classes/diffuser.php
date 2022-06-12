@@ -2,18 +2,16 @@
 
 class Diffuser extends Product
 {
-    private $_size;
+    private $_scent;
 
-
-    public function __construct($productId, $productName, $productDescription, $productQTY, $price, $size)
+    public function __construct($productId, $productName, $productDescription, $productQTY, $price, $scent)
     {
-        $this->_size = $size;
         parent::__construct($productId, $productName, $productDescription, $productQTY, $price);
+        $this->_scent = $scent;
     }
 
-
-    function getSize() {
-        return $this->_size;
+    function getScent()
+    {
+        return $this->_scent;
     }
-
 }

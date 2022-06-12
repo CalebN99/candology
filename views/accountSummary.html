@@ -15,7 +15,24 @@
     <p><span>Zip: </span>{{@SESSION.zip}}</p>
     <p><span>Card Ending in: </span>{{@SESSION.cardNum}}</p>
 
-    <button><a class="nav-link" href="login">Login</a></button>
+    <check if="{{ @SESSION.createAccOnCheck == true }}">
+        <true>
+            <button><a class="nav-link" href="checkout">Checkout</a></button>
+        </true>
+        <false>
+            <check if="{{ isset(@errors['login']) }}">
+                <true>
+                    <button><a class="nav-link" href="login">Login</a></button>
+                    <p>{{ @errors['login'] }}</p>
+                </true>
+                <false>
+                    <button><a class="nav-link" href="{{ @BASE }}">Home</a></button>
+                </false>
+            </check>
+
+        </false>
+    </check>
+
 
 </div>
 

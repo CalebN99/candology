@@ -2,18 +2,17 @@
 
 class Candle extends Product
 {
+    private $_burntime;
 
-    private $_scent;
-
-    public function __construct($productId, $productName, $productDescription, $productQTY, $price, $scent)
+    public function __construct($productId, $productName, $productDescription, $productQTY, $price, $burntime)
     {
-        $this->_scent = $scent;
         parent::__construct($productId, $productName, $productDescription, $productQTY, $price);
+        $this->_burntime = $burntime;
     }
 
 
-    function getScent() {
-        return $this->_scent;
+    function getBurn() {
+        return $this->_burntime;
     }
 
 

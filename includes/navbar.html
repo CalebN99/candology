@@ -1,48 +1,64 @@
 <!--
 Groupe's name : Solo trio
-project's name:Candology website
-File: Home page
-
-  ul.navbar-nav li {
-        background-color: #ad8c84; height: 80px;
-    }
-
-background-color: #ad8c84; margin:4px;
+project's name: Candology website
+File: Navbar
 -->
-<style>
-    ul.navbar-nav li{
 
-        display: flex;
-        justify-content: center;
-    }
-</style>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top shadow-sm">
     <a class="navbar-brand" href="{{ @BASE }}" >Candology</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-        <ul class="navbar-nav nav-inline w-100">
+        <ul class="navbar-nav nav-inline w-100 navbar-brand">
+
+            <!-- Browse Products Page -->
             <li class="nav-item">
                 <a class="nav-link" href="our_collections">Our collections</a>
             </li>
+
+            <!-- About Us -->
             <li class="nav-item">
                 <a class="nav-link" href="about_us">About Us</a>
             </li>
+
+            <!-- Contact Us -->
             <li class="nav-item">
                 <a class="nav-link" href="contact_us">Contact Us</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="checkout">Check out</a>
-            </li>
-            <li class="nav-item  float-end">
-                <a class="nav-link" href="login">Login</a>
-            </li>
-            <li class="nav-item float-end">
-                <a class="nav-link" href="new_account">Create Account</a>
-            </li>
+            <li>
+            <div class="right-0">
+                <ul>
+                <!-- Link to Checkout -->
+                <check if="isset(@SESSION.cart) && !@SESSION.cart->isEmpty()">
+                    <li class="nav-item d-inline-block">
+                        <a class="nav-link" href="checkout">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bag mt-n1" viewBox="0 0 16 16">
+                                <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                            </svg>
+                        </a>
+                    </li>
+                </check>
 
+                <!-- Account Links -->
+                <check if="{{ !isset(@SESSION.user) }}">
+                    <true>
+                        <li class="nav-item d-inline-block">
+                            <a class="nav-link" href="login">Login</a>
+                        </li>
+                        <li class="nav-item d-inline-block">
+                            <a class="nav-link" href="new_account">Create Account</a>
+                        </li>
+                    </true>
+                    <false>
+                        <li class="nav-item d-inline-block">
+                            <a class="nav-link" href="logout">Logout</a>
+                        </li>
+                    </false>
+                </check>
+                </ul>
+            </div>
+            </li>
         </ul>
     </div>
 </nav>
