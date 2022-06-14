@@ -216,7 +216,7 @@ class DataLayer
             $desc = $row['productDesc'];
             $qty = $row['productQTY'];
             $price = $row['price'];
-            $scent = "SCENT";
+            $scent = null;
 
             return new Diffuser($id, $name, $desc, $qty, $price, $scent);
         }
@@ -269,6 +269,7 @@ class DataLayer
                 VALUES (:orderID, :productID, :qty)";
             }
 
+
             $statement = $this->_dbh->prepare($sql);
 
             $productID = $product['prod']->getProductId();
@@ -283,7 +284,34 @@ class DataLayer
             }
 
             $statement->execute();
+
+            // Decreases quantity of product with amount ordered
+            $sql = "UPDATE products SET productQTY = productQTY - :qty WHERE productId = :id";
+            $statement = $this->_dbh->prepare($sql);
+
+            $statement->bindParam(':qty', $product['qty'], PDO::PARAM_INT);
+            $statement->bindParam(':id', $productID, PDO::PARAM_INT);
+
+            $statement->execute();
+
+
         }
+    }
+
+    function getScents() {
+        $sql = "SELECT scent FROM scents";
+
+        $statement = $this->_dbh->prepare($sql);
+        $statement->execute();
+
+        $scents = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $array = [];
+
+        foreach ($scents as $scent) {
+            $array[] = $scent['scent'];
+        }
+        return $array;
     }
 
     /**

@@ -74,6 +74,12 @@ class User
      */
     function getAddress2() {
         return $this->_address2;
+        //Write to database
+        //  $orderId = $GLOBALS['dataLayer']->saveDate($_SESSION['profile']);
+        // $orderIdMember = $GLOBALS['dataLayer']->saveDate($_SESSION['member']);
+
+        // $this->_f3->set('orderId', $orderId);
+        // $this->_f3->set('orderIdMember', $orderIdMember);
     }
 
     /**

@@ -12,9 +12,13 @@ class Cart
 //    }
 //
 
-    function addProduct($id, $qty)
+    function addProduct($id, $qty, $scent=NULL)
     {
         $prod = $GLOBALS['datalayer']->getProduct($id);
+
+        if($prod instanceof Diffuser) {
+            $prod->setScent($scent);
+        }
         $this->_cart[] = ["prod"=>$prod, "qty"=>$qty];
     }
 

@@ -14,4 +14,8 @@ class Diffuser extends Product
     {
         return $this->_scent;
     }
+
+    function setScent($scent) {
+        $this->_scent = $scent;
+    }
 }

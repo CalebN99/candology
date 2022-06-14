@@ -215,6 +215,7 @@ class Controller
     {
         // If request method is not post Redirect to collections
         if ($_SERVER['REQUEST_METHOD'] != "POST") {
+
             header("location: our_collections");
         }
 
@@ -239,19 +240,32 @@ class Controller
                 $_SESSION['prodView'] = $prod;
             }
 
+            if ($prod instanceof Diffuser) {
+                if(!$GLOBALS['valid']->validateScent($_POST['scent'])) {
+                    $this->_f3->set('errors["scent"]', 'Invalid Scent');
+                }
+            }
+
+
             if ($_POST['qty'] < 1) {
                 $this->_f3->set('errors["qty"]', 'Invalid Quantity');
             } else if ($_POST['qty'] > $prod->getProductQTY()) {
                 $this->_f3->set('errors["qty"]', 'Requested quantity not available');
             }
-            else {
+
+            if(empty($this->_f3->get('errors'))) {
                 // Create instance of cart if it doesn't exist
                 if (!isset($_SESSION['cart'])) {
                     $_SESSION['cart'] = new Cart();
                 }
 
                 // Add product/s to cart
-                $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty']);
+                if ($prod instanceof Diffuser) {
+                    $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty'], $_POST['scent']);
+                } else {
+                    $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty']);
+                }
+                header('location: our_collections');
             }
         }
 
@@ -260,6 +274,9 @@ class Controller
             header('location: our_collections');
         }
         else {
+            $scents = $GLOBALS['datalayer']->getScents();
+            $this->_f3->set("scents", $scents);
+
             // Store the product object in the hive
             $this->_f3->set('product', $_SESSION['prodView']);
 
@@ -277,7 +294,7 @@ class Controller
         // Check if user is has account/is logged in
         if (!isset($_SESSION['user'])) {
             $_SESSION['createAccOnCheck'] = true;
-            header('location: new_account');
+            header('location: login');
         }
         // Checks if Order is being placed
         else if ($_SERVER['REQUEST_METHOD'] == 'POST') {

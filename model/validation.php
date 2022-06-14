@@ -46,4 +46,16 @@ class Validation {
     function validCVV($cvv) {
         return $cvv < 100 || $cvv > 9999;
     }
+
+    function validateScent($setScent) {
+        $scents = $GLOBALS['datalayer']->getScents();
+
+        foreach ($scents as $scent) {
+            if ($scent == $setScent) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
