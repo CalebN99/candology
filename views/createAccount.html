@@ -78,7 +78,7 @@
                     <label for="state">State:</label>
                     <select id="state" name="state" class="form-control">
                             <repeat group="{{ @states }}" value="{{ @stateName }}" key="{{ @stateABBR }}">
-                                <option value="{{ @stateABBR }}" <check if="{{ @stateABBR == @state }}">selected</check>>
+                                <option value="{{ @stateABBR }}" ><check if="{{ @stateABBR == @state }}">selected</check>
                                 {{ @stateName }}</option>
                             </repeat>
 
