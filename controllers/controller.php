@@ -367,6 +367,8 @@ class Controller
             header('Location: ' . $this->_f3['BASE']);
         }
         else {
+
+            $GLOBALS['datalayer']->getAllOrders();
             // Load admin page
             $view = new Template();
             echo $view->render('views/admin.html');

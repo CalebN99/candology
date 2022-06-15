@@ -322,6 +322,70 @@ class DataLayer
         return $array;
     }
 
+    function getAllOrders() {
+
+        $_SESSION["orders"] = [];
+        //Query all orders
+        $sql = "SELECT * FROM orders";
+        $statement = $this->_dbh->prepare($sql);
+        $statement->execute();
+
+        $orders = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+        // For each order, query all ordered products in that order
+        foreach ($orders as $order) {
+
+//            $orderInfo = array("order"=>$order)
+            $sql = "SELECT * FROM products
+                INNER JOIN orderedProducts ON products.productId = orderedProducts.product_id
+                WHERE orderedProducts.order_id = :id";
+
+            $statement = $this->_dbh->prepare($sql);
+            $statement->bindParam(':id', $order['order_id'], PDO::PARAM_INT);
+
+            $statement->execute();
+            $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            $products = [];
+            foreach ($rows as $row) {
+
+                if ($row['productType'] == 'candle') {
+                    $id = $row['productId'];
+                    $name = $row['productName'];
+                    $desc = $row['productDesc'];
+                    $qty = $row['qty'];
+                    $price = $row['price'];
+                    $burntime = $row['productDetails'];
+
+                    $products[] = new Candle($id, $name, $desc, $qty, $price, $burntime);
+
+                } else {
+                    $id = $row['productId'];
+                    $name = $row['productName'];
+                    $desc = $row['productDesc'];
+                    $qty = $row['qty'];
+                    $price = $row['price'];
+                    $scent = $row['productDetails'];
+
+                    $products[] = new Diffuser($id, $name, $desc, $qty, $price, $scent);
+                }
+
+            }
+            $orderInfo = array("order"=>$order, "products"=>$products );
+
+            $_SESSION["orders"][] = $orderInfo;
+        }
+
+        for($i = 0; $i < sizeof($_SESSION["orders"]); $i++) {
+            $_SESSION["orders"][$i]["order"]["payment"] = explode(" ", $_SESSION["orders"][$i]["order"]["payment"]);
+        }
+
+
+
+
+    }
+
     /**
      * Method to get an array of states and their abbreviations.
      * @return string[] Map of state abbriviations to display name

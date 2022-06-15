@@ -33,68 +33,77 @@ quantities.
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>5</td>
-                <td>Caleb Norris</td>
-                <td>5-12-2022</td>
-                <td>$63.43</td>
-                <td>
-                    <input type="checkbox" checked disabled>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="6">
-                    <div class="row">
-                        <div class="col-12 col-lg-5 order-lg-2">
+            <repeat group="{{@SESSION.orders}}" value="{{ @order }}">
+                <tr>
+                    <td>{{ @order["order"]["order_id"] }}</td>
+                    <td>{{ @order["order"]["name"] }}</td>
+                    <td>{{ @order["order"]["date"] }}</td>
+                    <td>{{ @order["order"]["total_price"] }}</td>
+                    <td>
+                        <check if="{{ @order['order']['fulfilled'] }} == 1">
+                            <true>
+                                <input type="checkbox" checked disabled>
+                            </true>
+                            <false>
+                                <input type="checkbox" disabled>
+                            </false>
+                        </check>
 
-                            <p>
-                                <span class="font-weight-bold">Address: </span> 1234 St NW, Seattle WA, 1234567
-                            </p>
-                            <p>
-                                <span class="font-weight-bold">Card: </span> 123412341234124  <br><span class="font-weight-bold"> Date: </span>5/2022
-                                <span class="font-weight-bold"> <br>CVV: </span>456
-                            </p>
-                            <button id="{{ @orderId }}">Fulfill Order</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="row">
+                            <div class="col-12 col-lg-5 order-lg-2">
+
+                                <p>
+                                    <span class="font-weight-bold">Address: </span> {{ @order["order"]["address"] }}
+                                </p>
+                                <p>
+                                    <span class="font-weight-bold">Card: </span> {{ @order["order"]["payment"][0] }} <br><span class="font-weight-bold"> Date: </span>
+                                    {{ @order["order"]["payment"][1] }}/{{ @order["order"]["payment"][2] }}
+                                    <span class="font-weight-bold"> <br>CVV: </span>{{ @order["order"]["payment"][3] }}
+                                </p>
+                                <button id="{{ @orderId }}">Fulfill Order</button>
+                            </div>
+                            <div class="col-12 col-lg-7">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th class="mx-1">ProductID</th>
+                                        <th>Product Name</th>
+                                        <th>Details</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                            <repeat group="{{ @order['products'] }}" value="{{ @prod }}">
+                                                <tr class="bg-candology">
+                                                    <td>{{ @prod->getProductId() }}</td>
+                                                    <td>{{ @prod->getProductName() }}</td>
+                                                    <check if="{{ @prod instanceof Diffuser }}">
+                                                        <true>
+                                                            <td>{{ @prod->getScent() }}</td>
+                                                        </true>
+                                                        <false>
+                                                            <td>{{ @prod->getBurn() }}</td>
+                                                        </false>
+
+                                                    </check>
+                                                    <td>x{{ @prod->getProductQTY() }}</td>
+                                                    <td>{{ @prod->getPrice() }}</td>
+                                                </tr>
+                                            </repeat>
+
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-12 col-lg-7">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th class="mx-1">ProductID</th>
-                                    <th>Product Name</th>
-                                    <th>Details</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="bg-candology">
-                                    <td>4</td>
-                                    <td>Jasmine Candle</td>
-                                    <td></td>
-                                    <td>5</td>
-                                    <td>$14.64</td>
-                                </tr>
-                                <tr class="bg-candology">
-                                    <td>4</td>
-                                    <td>Jasmine Candle</td>
-                                    <td></td>
-                                    <td>5</td>
-                                    <td>$14.64</td>
-                                </tr>
-                                <tr class="bg-candology">
-                                    <td>4</td>
-                                    <td>Jasmine Candle</td>
-                                    <td></td>
-                                    <td>5</td>
-                                    <td>$14.64</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            </repeat>
+
             </tbody>
         </table>
     </div>
