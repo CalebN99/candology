@@ -88,7 +88,8 @@ li {
     display: none;
 }
 
-/***   BROWSE PRODUCTS PAGE STYLES   ***/
+/*   =======   BROWSE PRODUCTS PAGE STYLES   =======   */
+
 /* Card rounded edges */
 .rounded-custom {
     border-radius: 10px;
@@ -115,7 +116,8 @@ li {
 
 
 
-/* CHECKOUT FORM PAGE */
+/*   =======   CHECKOUT FORM PAGE   =======   */
+
 .checkoutForm {
     display: block;
     width: 90%;
@@ -136,8 +138,21 @@ li {
     padding: 1em;
 }
 
-.contactForm
 
+/*   =======   CONTACT US PAGE   =======   */
+
+.contactForm input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical
+}
+
+/* Style the submit button with a specific background color etc */
 input[type=submit] {
     background-color: #ad8c84;
     color: white;
@@ -153,8 +168,26 @@ input[type=submit]:hover {
 }
 
 /* Add a background color and some padding around the form */
-.container {
+.contactForm {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+}
+
+/*   =======   ADMIN PAGE   =======   */
+
+.adminButton {
+    border: none;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    padding: 3px 5px;
+}
+
+.bg-candology {
+    background-color: #D3C0B2;
+}
+
+.nav-item.active, .disable-hover:hover {
+    background-color: #D3C0B2;
 }

@@ -4,46 +4,31 @@
 
 <!-- Header -->
 <include href="includes/header.html"></include>
+
 <!-- navbar -->
 <include href="includes/navbar.html"></include>
 
-<head>
-    <meta charset="UTF-8">
+<body>
+    <div class="container contactForm">
+        <form>
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="firstname" placeholder="Your name">
 
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lastname" placeholder="Your last name"><br>
 
-    <title>Contact Us</title>
+            <label for="state">state</label>
+            <select id="state" name="state">
+                <option value="Washington">Washington</option>
+                <option value="Utah">Utah</option>
+                <option value="California">California</option>
+            </select>
 
-    <div class="container ContactForm">
+            <label for="subject">Subject</label>
+            <textarea id="subject" name="subject" placeholder="What do you want to talk to us about?"></textarea>
 
-
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" name="firstname" placeholder="Your name">
-
-        <label for="lname">Last Name</label>
-        <input type="text" id="lname" name="lastname" placeholder="Your last name"><br>
-
-        <label for="state">state</label>
-        <select id="state" name="state">
-            <option value="Washington">Washington</option>
-            <option value="Utah">Utah</option>
-            <option value="California">California</option>
-        </select>
-
-        <label for="subject">Subject</label>
-        <textarea id="subject" name="subject" placeholder="What do you want to talk to us about?" style="height:200px"></textarea>
-
-        <input type="submit" value="Submit">
-
+            <input type="submit" value="Submit">
         </form>
     </div>
-
-
-
-
-
-
-</head>
-<body>
-
 </body>
 </html>

@@ -1,7 +1,10 @@
 <!--
 Groupe's name : Solo trio
 project's name:Candology website
-File: Home page
+File: admin.html
+
+Admin Page to view and fulfill orders. Admin can also change stock/inventory
+quantities.
 
 -->
 
@@ -12,90 +15,90 @@ File: Home page
 <!-- Navbar -->
 <include href="includes/navbar.html"></include>
 
-<h1>
-    Admin
-</h1>
-
 <div class="container">
-    <div class="order">
-        <p>OrderID</p>
-        <table class="table table-hover table-expandable table-striped">
-            <thead>
-            <tr>
-                <th>OrderID</th>
-                <th>Customer Name</th>
-                <th>Date</th>
-                <th>Total Price</th>
-                <th>Fulfilled</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>5</td>
-                <td>Caleb Norris</td>
-                <td>5-12-2022</td>
-                <td>$63.43</td>
-                <td>
-                    <input type="checkbox" checked disabled>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="5">
-                    <div class="row">
-                        <div class="col-sm-4=6">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th class="mx-1">ProductID</th>
-                                    <th>Product Name</th>
-                                    <th>Details</th>
-                                    <th>Quantity</th>
-                                    <th>Price</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="bg-white">
-                                    <td>4</td>
-                                    <td>Jasmine Candle</td>
-                                    <td></td>
-                                    <td>5</td>
-                                    <td>$14.64</td>
-                                </tr>
-                                <tr class="bg-white">
-                                    <td>4</td>
-                                    <td>Jasmine Candle</td>
-                                    <td></td>
-                                    <td>5</td>
-                                    <td>$14.64</td>
-                                </tr>
-                                <tr class="bg-white">
-                                    <td>4</td>
-                                    <td>Jasmine Candle</td>
-                                    <td></td>
-                                    <td>5</td>
-                                    <td>$14.64</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-sm-4">
 
-                            <p>
-                                <span class="font-weight-bold">Address: </span> 1234 St NW, Seattle WA, 1234567
-                            </p>
-                            <p>
-                                <span class="font-weight-bold">Card: </span> 123412341234124  <br><span class="font-weight-bold"> Date: </span>5/2022
-                                <span class="font-weight-bold"> <br>CVV: </span>456
-                            </p>
-                        </div>
-                    </div>
-
-
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="navbar justify-content-start pt-3 pb-0">
+        <button class="adminButton nav-item active">Orders</button>
+        <button class="adminButton nav-item">Inventory</button>
     </div>
+    <div class="order bg-candology rounded-lg p-3">
+            <table class="table table-expandable table-striped">
+                <thead>
+                <tr>
+                    <th>OrderID</th>
+                    <th>Customer Name</th>
+                    <th>Date</th>
+                    <th>Total Price</th>
+                    <th>Fulfilled</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>5</td>
+                    <td>Caleb Norris</td>
+                    <td>5-12-2022</td>
+                    <td>$63.43</td>
+                    <td>
+                        <input type="checkbox" checked disabled>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">
+                        <div class="row">
+                            <div class="col-12 col-lg-5 order-lg-2">
+
+                                <p>
+                                    <span class="font-weight-bold">Address: </span> 1234 St NW, Seattle WA, 1234567
+                                </p>
+                                <p>
+                                    <span class="font-weight-bold">Card: </span> 123412341234124  <br><span class="font-weight-bold"> Date: </span>5/2022
+                                    <span class="font-weight-bold"> <br>CVV: </span>456
+                                </p>
+                                <button id="{{ @orderId }}">Fulfill Order</button>
+                            </div>
+                            <div class="col-12 col-lg-7">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th class="mx-1">ProductID</th>
+                                        <th>Product Name</th>
+                                        <th>Details</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="bg-candology">
+                                        <td>4</td>
+                                        <td>Jasmine Candle</td>
+                                        <td></td>
+                                        <td>5</td>
+                                        <td>$14.64</td>
+                                    </tr>
+                                    <tr class="bg-candology">
+                                        <td>4</td>
+                                        <td>Jasmine Candle</td>
+                                        <td></td>
+                                        <td>5</td>
+                                        <td>$14.64</td>
+                                    </tr>
+                                    <tr class="bg-candology">
+                                        <td>4</td>
+                                        <td>Jasmine Candle</td>
+                                        <td></td>
+                                        <td>5</td>
+                                        <td>$14.64</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="scripts/bootstrap-table-expandable.js"></script>

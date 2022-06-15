@@ -20,15 +20,22 @@ class Controller
         echo $view->render('views/home.html');
     }
 
+    /**
+     * Method to load the login page and validate login info
+     * @return void
+     */
     function login()
     {
+        // If user submitted login form
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+            // Query database for user
             $user = $GLOBALS['datalayer']->login($_POST['email'], $_POST['password']);
 
+            // Validate user
             if ($user instanceof User) {
                 $_SESSION['user'] = $user;
-                $_SESSION['successMessage'] =  array("header" => "Logged in", "message" => "Welcome, " . $user->getFName());
+                $_SESSION['successMessage'] = array("header" => "Logged in", "message" => "Welcome, " . $user->getFName());
                 header('location:../candology');
             } else if($user instanceof Admin) {
                 $_SESSION['user'] = $user;
@@ -38,6 +45,7 @@ class Controller
             }
         }
 
+        // Display page
         $view = new Template();
         echo $view->render('views/login.html');
     }
