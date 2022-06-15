@@ -14,17 +14,17 @@ const invTab = document.getElementById("invTab");
 
 // Assign functionality to buttons
 orderTabBtn.onclick = function() {
-    displayTab(orderTab, invTab);
+    displayTab(orderTab, invTab, orderTabBtn, invTabBtn);
 }
 invTabBtn.onclick = function() {
-    displayTab(invTab, orderTab);
+    displayTab(invTab, orderTab, invTabBtn, orderTabBtn);
 }
 
 // Function to toggle visibility of tabs
-displayTab = function (activeTab, disableTab) {
+displayTab = function (activeTab, disableTab, activeBtn, disableBtn) {
     // assign active class to display tab button
-    activeTab.classList.add("active");
-    disableTab.classList.remove("active");
+    disableBtn.classList.remove("active");
+    activeBtn.classList.add("active");
 
     // Hide the other tab
     disableTab.classList.remove("d-block");
