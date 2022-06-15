@@ -86,6 +86,11 @@ $f3->route('GET|POST /checkout', function() {
     $GLOBALS['con']->checkout();
 });
 
+// Admin
+$f3->route('GET|POST /admin', function() {
+    $GLOBALS['con']->admin();
+});
+
 
 //Run f3
 $f3->run();

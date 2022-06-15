@@ -12,6 +12,10 @@ class Controller
 
     function home()
     {
+        if (isset($_SESSION['successMessage'])) {
+            $this->_f3->set('success', $_SESSION['successMessage']);
+            $_SESSION['successMessage'] = null;
+        }
         $view = new Template();
         echo $view->render('views/home.html');
     }
@@ -24,7 +28,11 @@ class Controller
 
             if ($user instanceof User) {
                 $_SESSION['user'] = $user;
+                $_SESSION['successMessage'] =  array("header" => "Logged in", "message" => "Welcome, " . $user->getFName());
                 header('location:../candology');
+            } else if($user instanceof Admin) {
+                $_SESSION['user'] = $user;
+                header('location: admin');
             } else {
                 $this->_f3->set('errors["login"]', 'Invalid Email or Password..');
             }
@@ -187,6 +195,11 @@ class Controller
      */
     function ourCollections($products)
     {
+        if (isset($_SESSION['successMessage'])) {
+            $this->_f3->set('success', $_SESSION['successMessage']);
+            $_SESSION['successMessage'] = null;
+        }
+
         $this->_f3->set('products', $products);
 
         $view = new Template();
@@ -265,7 +278,24 @@ class Controller
                 } else {
                     $_SESSION['cart']->addProduct($_POST['id'], $_POST['qty']);
                 }
-                header('location: our_collections');
+
+                // Checking if product was added to cart
+                $valid = false;
+                foreach ($_SESSION['cart']->getCart() as $item) {
+                    if($item['prod']->getProductId() == $_POST['id'] && $item['qty'] == $_POST['qty']) {
+                        $valid = true;
+                    }
+                }
+
+                if($valid) {
+
+                    $_SESSION['successMessage'] =  array("header" => "Added to cart!", "message" => $prod->getProductName());
+
+
+                    header('location: our_collections');
+
+                }
+
             }
         }
 
@@ -301,10 +331,12 @@ class Controller
             // Only place order if cart exists
             if (isset($_SESSION['cart'])) {
                 $GLOBALS['datalayer']->placeOrder();
+                $_SESSION['successMessage'] = array("header" => "Successfully placed order", "message" => "Thank you, " . $_SESSION['user']->getFName());
             }
 
             // Clear Cart
             $_SESSION['cart'] = new Cart();
+
 
             // Redirect to home
             header('Location: ' . $this->_f3['BASE']);
@@ -315,6 +347,15 @@ class Controller
             $view = new Template();
             echo $view->render('views/checkout.html');
         }
+    }
+
+    /**
+     * Method to logout the user. Clears the session (cart and user data)
+     */
+    function admin()
+    {
+        $view = new Template();
+        echo $view->render('views/admin.html');
     }
 
 

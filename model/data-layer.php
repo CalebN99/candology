@@ -60,9 +60,14 @@ class DataLayer
         $user = $statement->fetch();
 
         if (!empty($user)) {
-            return new User($user['fname'], $user['lname'], $user['userId'], $user['email'],
-                $user['street'], $user['address2'], $user['city'], $user['zip'], $user['state'],
-                $user['cardNum'], $user['cardExpMonth'], $user['cardExpYear'], $user['cvv']);
+            if ($user['admin'] == 1) {
+                return new Admin($user['userId'], $user['email']);
+            } else {
+                return new User($user['fname'], $user['lname'], $user['userId'], $user['email'],
+                    $user['street'], $user['address2'], $user['city'], $user['zip'], $user['state'],
+                    $user['cardNum'], $user['cardExpMonth'], $user['cardExpYear'], $user['cvv']);
+            }
+
         }
 
         return false;
@@ -253,46 +258,49 @@ class DataLayer
         $statement->bindParam(':userName', $name, PDO::PARAM_STR);
         $statement->bindParam(':payment', $payment, PDO::PARAM_STR);
 
-        $statement->execute();
+        if($statement->execute()) {
 
-        $orderID = $this->_dbh->lastInsertId();
+            $orderID = $this->_dbh->lastInsertId();
 
-        // Add Products to OrderedProducts table
-        $products = $cart->getCart();
-        foreach($products as $product) {
-            if ($product['prod'] instanceof Diffuser) {
-                $sql = "INSERT INTO orderedProducts(`order_id`, `product_id`, `qty`, `productDetails`) 
+            // Add Products to OrderedProducts table
+            $products = $cart->getCart();
+            foreach($products as $product) {
+                if ($product['prod'] instanceof Diffuser) {
+                    $sql = "INSERT INTO orderedProducts(`order_id`, `product_id`, `qty`, `productDetails`) 
                 VALUES (:orderID, :productID, :qty, :details)";
-            }
-            else {
-                $sql = "INSERT INTO orderedProducts(`order_id`, `product_id`, `qty`) 
+                }
+                else {
+                    $sql = "INSERT INTO orderedProducts(`order_id`, `product_id`, `qty`) 
                 VALUES (:orderID, :productID, :qty)";
-            }
+                }
 
 
-            $statement = $this->_dbh->prepare($sql);
+                $statement = $this->_dbh->prepare($sql);
 
-            $productID = $product['prod']->getProductId();
+                $productID = $product['prod']->getProductId();
 
-            $statement->bindParam(':orderID', $orderID, PDO::PARAM_INT);
-            $statement->bindParam(':productID', $productID, PDO::PARAM_INT);
-            $statement->bindParam(':qty', $product['qty'], PDO::PARAM_INT);
+                $statement->bindParam(':orderID', $orderID, PDO::PARAM_INT);
+                $statement->bindParam(':productID', $productID, PDO::PARAM_INT);
+                $statement->bindParam(':qty', $product['qty'], PDO::PARAM_INT);
 
-            if ($product['prod'] instanceof Diffuser) {
-                $scent = $product['prod']->getScent();
-                $statement->bindParam(':details', $scent);
-            }
+                if ($product['prod'] instanceof Diffuser) {
+                    $scent = $product['prod']->getScent();
+                    $statement->bindParam(':details', $scent);
+                }
 
-            $statement->execute();
+                if($statement->execute()) {
+                    // Decreases quantity of product with amount ordered
+                    $sql = "UPDATE products SET productQTY = productQTY - :qty WHERE productId = :id";
+                    $statement = $this->_dbh->prepare($sql);
 
-            // Decreases quantity of product with amount ordered
-            $sql = "UPDATE products SET productQTY = productQTY - :qty WHERE productId = :id";
-            $statement = $this->_dbh->prepare($sql);
+                    $statement->bindParam(':qty', $product['qty'], PDO::PARAM_INT);
+                    $statement->bindParam(':id', $productID, PDO::PARAM_INT);
 
-            $statement->bindParam(':qty', $product['qty'], PDO::PARAM_INT);
-            $statement->bindParam(':id', $productID, PDO::PARAM_INT);
+                    $statement->execute();
+                }
+        }
 
-            $statement->execute();
+
 
 
         }
