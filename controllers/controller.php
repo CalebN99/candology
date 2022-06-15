@@ -362,8 +362,15 @@ class Controller
      */
     function admin()
     {
-        $view = new Template();
-        echo $view->render('views/admin.html');
+        // Validate that the user account is logged in as admin
+        if(!($_SESSION['user'] instanceof Admin)) {
+            header('Location: ' . $this->_f3['BASE']);
+        }
+        else {
+            // Load admin page
+            $view = new Template();
+            echo $view->render('views/admin.html');
+        }
     }
 
 
