@@ -204,6 +204,7 @@ input[type=submit]:hover {
 
 /* Position message toast below nav */
 .message-sticky {
+    position: fixed;
     top: 80px;
 }
 
