@@ -296,12 +296,8 @@ class Controller
                 }
 
                 if($valid) {
-
                     $_SESSION['successMessage'] =  array("header" => "Added to cart!", "message" => $prod->getProductName());
-
-
                     header('location: our_collections');
-
                 }
 
             }

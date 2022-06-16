@@ -4,7 +4,7 @@
 <!-- Navbar -->
 <include href="includes/navbar.html"></include>
 
-<div class="container accountForum">
+<div class="container accountForum p-4">
    <h1>Account Summary</h1>
     <hr>
     <p><span>Name: </span>{{@SESSION.fname}} {{@SESSION.lname}}</p>
@@ -17,16 +17,16 @@
 
     <check if="{{ @SESSION.createAccOnCheck == true }}">
         <true>
-            <button><a class="nav-link" href="checkout">Checkout</a></button>
+            <a class="nav-link btn bg-candology-dark max-w-50" href="checkout">Checkout</a>
         </true>
         <false>
             <check if="{{ isset(@errors['login']) }}">
                 <true>
-                    <button><a class="nav-link" href="login">Login</a></button>
+                    <a class="nav-link btn bg-candology-dark max-w-50" href="login">Login</a>
                     <p>{{ @errors['login'] }}</p>
                 </true>
                 <false>
-                    <button><a class="nav-link" href="{{ @BASE }}">Home</a></button>
+                    <a class="nav-link btn bg-candology-dark max-w-50" href="{{ @BASE }}">Home</a>
                 </false>
             </check>
 
