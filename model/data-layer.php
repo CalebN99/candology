@@ -1,4 +1,7 @@
 <?php
+/**
+ * DataLayer class
+ */
 class DataLayer
 {
 
@@ -10,6 +13,10 @@ class DataLayer
 
     // DataLayer constructor
 
+    /**
+     * Constructor for DataLayer
+     * @return void
+     */
     function __construct()
     {
         require_once($_SERVER['DOCUMENT_ROOT'].'/../config.php');
@@ -19,6 +26,10 @@ class DataLayer
     }
 
 
+    /**
+     * Method uses PDO to insert into userAccounts database table
+     * @return void
+     */
     function createAccount()
     {
 
@@ -45,6 +56,10 @@ class DataLayer
         $statement->execute();
     }
 
+    /**
+     * Method uses PDO to query userAccounts database table
+     * @return Product object or false
+     */
     function login($email, $password)
     {
 
