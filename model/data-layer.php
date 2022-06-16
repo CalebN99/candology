@@ -88,7 +88,7 @@ class DataLayer
      * which contain their product information.
      * @return array of all unique products sold
      */
-    function getProducts(): array
+    function getProducts()
     {
         // Get candles and diffusers
         $candles = $this->getCandles();
@@ -102,7 +102,7 @@ class DataLayer
      * Method to get an array of unique candle objects containing product info
      * @return array of Candle objects containing product info
      */
-    function getCandles(): array
+    function getCandles()
     {
         // Query database for Candles
         $sql = "SELECT * FROM products
@@ -141,7 +141,7 @@ class DataLayer
      * Method to get an array of unique diffuser objects containing product info
      * @return array of Diffuser objects containing product info
      */
-    function getDiffusers(): array
+    function getDiffusers()
     {
         // Query database for Diffusers
         $sql = "SELECT * FROM products

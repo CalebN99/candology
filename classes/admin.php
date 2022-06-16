@@ -6,8 +6,8 @@
  */
 class Admin
 {
-    private int $_adminId;
-    private string $_email;
+    private $_adminId;
+    private $_email;
 
     /**
      * Constructor method for Admin class
@@ -25,7 +25,7 @@ class Admin
      * Method to return $_adminId Variable
      * @return int admin userID
      */
-   function getAdminId(): int
+   function getAdminId()
    {
        return $this->_adminId;
    }
@@ -35,7 +35,7 @@ class Admin
      * Method to return $_email variable
      * @return string admin username
      */
-   function getAdminEmail(): string
+   function getAdminEmail()
    {
        return $this->_email;
    }

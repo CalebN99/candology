@@ -5,7 +5,7 @@
  */
 class Diffuser extends Product
 {
-    private string $_scent;
+    private $_scent;
 
     /**
      * Constructor for Diffuser. Calls parent constructor and sets scent option

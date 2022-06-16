@@ -5,7 +5,7 @@
  */
 class Candle extends Product
 {
-    private int $_burntime;
+    private $_burntime;
 
     /**
      * Constructor method for Candle class that calls parents constructor
@@ -22,7 +22,7 @@ class Candle extends Product
      * Method to return $_burntime variable
      * @return int burn time of the candle
      */
-    function getBurn(): int
+    function getBurn()
     {
         return $this->_burntime;
     }
