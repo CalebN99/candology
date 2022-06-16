@@ -163,6 +163,8 @@ class Controller
 
             if(empty($_POST['address2'])) {
                 $_SESSION['address2'] = "";
+            } else {
+                $_SESSION['address2'] = $_POST['address2'];
             }
 
             if ($valid) {
