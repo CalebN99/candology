@@ -70,14 +70,7 @@
 
                 <div class="col-4">
                     <!-- Product Image -->
-                    <check if="{{ @product instanceof Candle }}">
-                        <true>
-                            <img src="images/candle_stock.jpg" class="w-100 rounded-custom shadow" alt="Basic White candle (photo unavailable)">
-                        </true>
-                        <false>
-                            <img src="images/diffuser_stock.jpg" class="w-100 rounded-custom shadow" alt="Basic reed diffuser (photo unavailable)">
-                        </false>
-                    </check>
+                    <img src="images/{{ @product->getProductId() }}.jpg" class="w-100 rounded-custom shadow" alt="Product Photo">
                 </div>
             </div>
         </div>

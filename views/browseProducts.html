@@ -44,11 +44,13 @@
                 <repeat group="{{ @products }}" value="{{ @product }}">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mt-4">
                         <div class="card shadow rounded-custom border-0">
-                            <img src="images/candle_stock.jpg" class="card-img-top rounded-custom-top" alt="Basic White candle (photo unavailable)">
+
+                            <!-- Product Image -->
+                            <img src="images/{{ @product->getProductId() }}.jpg" class="card-img-top rounded-custom-top" alt="Product Photo">
+
+                            <!-- Product Info -->
                             <div class="card-body">
-                                <h5 class="card-title">{{ @product->getProductName() }}
-                                    <span class="float-right">${{ @product->getPrice() }}</span>
-                                </h5>
+                                <h5 class="card-title">{{ @product->getProductName() }}</h5>
                                 <p class="card-text text-truncate h-25">{{ @product->getProductDescription() }}</p>
                                 <form action="product_page" method="post">
                                     <input type="hidden" value="{{ @product->getProductId() }}" name="productId">
