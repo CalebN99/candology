@@ -139,9 +139,15 @@ class Controller
             }
 
             // Validating state
-            $_SESSION['state'] = $_POST['state'];
-            // Validating zip
+            if (Validation::validState($_POST['state'])) {
+                $_SESSION['state'] = strtoupper($_POST['state']);
+            }
+            else {
+                $this->_f3->set('errors["state"]', 'Invalid State');
+                $valid = false;
+            }
 
+            // Validating zip
             if ($GLOBALS['valid']->validZip($_POST['zip'])) {
                 $this->_f3->set('errors["zip"]', 'Valid zip required');
                 $valid = false;

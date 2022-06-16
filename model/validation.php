@@ -65,6 +65,17 @@ class Validation {
     }
 
     /**
+     * Method to check if passed state abbreviation is a key in the states map
+     * from the data-layer.
+     * @param $state String of two characters representing US state or territory
+     * @return bool True if $state abbreviation is a key in states map, false
+     * otherwise
+     */
+    static function validState($state) {
+        return array_key_exists($state, DataLayer::getStatesMap());
+    }
+
+    /**
      * Function to validate zip
      * @param int $zip User's zipcode
      * @return boolean true if valid, false otherwise

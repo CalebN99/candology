@@ -42,7 +42,7 @@ quantities.
                     <td>{{ @order["order"]["order_id"] }}</td>
                     <td>{{ @order["order"]["name"] }}</td>
                     <td>{{ @order["order"]["date"] }}</td>
-                    <td>{{ @order["order"]["total_price"] }}</td>
+                    <td>${{ @order["order"]["total_price"] }}</td>
                     <td>
                         <check if="{{ @order['order']['fulfilled'] }} == 1">
                             <true>
@@ -107,7 +107,7 @@ quantities.
 
                                                 </check>
                                                 <td>x{{ @prod->getProductQTY() }}</td>
-                                                <td>{{ @prod->getPrice() }}</td>
+                                                <td>${{ @prod->getPrice() }}</td>
                                             </tr>
                                         </repeat>
                                     </tbody>
