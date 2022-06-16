@@ -156,7 +156,7 @@ quantities.
                                    name="{{ @product->getProductId() }}" value="{{ @product->getProductQTY() }}">
                         </div>
                     </td>
-                    <td>{{ @product->getPrice() }}</td>
+                    <td>${{ @product->getPrice() }}</td>
                 </tr>
             </repeat>
             </tbody>
