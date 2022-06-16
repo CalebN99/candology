@@ -91,6 +91,11 @@ $f3->route('GET|POST /admin', function() {
     $GLOBALS['con']->admin();
 });
 
+// Admin Update Product Quantity
+$f3->route('GET|POST /admin-quantity-update', function() {
+    $GLOBALS['con']->adminQuantityUpdate();
+});
+
 
 //Run f3
 $f3->run();

@@ -298,15 +298,13 @@ class DataLayer
 
                     $statement->execute();
                 }
-        }
-
-
-
-
+            }
         }
     }
 
-    function getScents() {
+
+    function getScents()
+    {
         $sql = "SELECT scent FROM scents";
 
         $statement = $this->_dbh->prepare($sql);
@@ -322,9 +320,16 @@ class DataLayer
         return $array;
     }
 
-    function getAllOrders() {
+    /**
+     * Method to query the database for all the orders (fulfilled and
+     * unfulfilled). Gets all the orders and their associated products.
+     * @return void
+     */
+    function getAllOrders()
+    {
 
         $_SESSION["orders"] = [];
+
         //Query all orders
         $sql = "SELECT * FROM orders";
         $statement = $this->_dbh->prepare($sql);
@@ -336,7 +341,6 @@ class DataLayer
         // For each order, query all ordered products in that order
         foreach ($orders as $order) {
 
-//            $orderInfo = array("order"=>$order)
             $sql = "SELECT * FROM products
                 INNER JOIN orderedProducts ON products.productId = orderedProducts.product_id
                 WHERE orderedProducts.order_id = :id";
@@ -380,10 +384,25 @@ class DataLayer
         for($i = 0; $i < sizeof($_SESSION["orders"]); $i++) {
             $_SESSION["orders"][$i]["order"]["payment"] = explode(" ", $_SESSION["orders"][$i]["order"]["payment"]);
         }
+    }
 
+    /**
+     * Method to update a product quantity in the database. This represents the
+     * number of this product in stock.
+     * @param int $id product id of product to update quantity
+     * @param int $qty new quantity of product
+     * @return void
+     */
+    function setQuantity($id, $qty)
+    {
+        // Query database to update product quantity
+        $sql = "UPDATE products SET productQTY = :qty WHERE productId = :id";
 
+        $statement = $this->_dbh->prepare($sql);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        $statement->bindParam(':qty', $qty, PDO::PARAM_INT);
 
-
+        $statement->execute();
     }
 
     /**

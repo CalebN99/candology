@@ -358,7 +358,9 @@ class Controller
     }
 
     /**
-     * Method to logout the user. Clears the session (cart and user data)
+     * Method to load the admin page. Redirects the user to the home page if
+     * user is not signed in as admin. Also requests orders and products from
+     * the database to be displayed to the admin.
      */
     function admin()
     {
@@ -367,13 +369,26 @@ class Controller
             header('Location: ' . $this->_f3['BASE']);
         }
         else {
-
+            // Puts the orders in SESSION['orders']
             $GLOBALS['datalayer']->getAllOrders();
+
+            // Stores the list of all products in the hive
+            $this->_f3->set('products', $GLOBALS['datalayer']->getProducts());
+
             // Load admin page
             $view = new Template();
             echo $view->render('views/admin.html');
         }
     }
 
-
+    function adminQuantityUpdate()
+    {
+        if(!($_SESSION['user'] instanceof Admin)) {
+            header('Location: ' . $this->_f3['BASE']);
+        }
+        else {
+            $view = new Template();
+            echo $view->render('scripts/updateProductQTY.php');
+        }
+    }
 }

@@ -191,3 +191,10 @@ input[type=submit]:hover {
 .nav-item.active, .disable-hover:hover {
     background-color: #D3C0B2;
 }
+
+.max-w-50 {
+    max-width: 80px;
+}
+.bg-opacity-50 {
+    background: rgba(181, 162, 148, .75);
+}

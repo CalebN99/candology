@@ -15,6 +15,10 @@ quantities.
 <!-- Navbar -->
 <include href="includes/navbar.html"></include>
 
+<!-- Success/Error Message -->
+<div id="message" class="toast position-absolute right-0 mx-4 px-4" data-delay="2000" role="alert"
+     aria-live="assertive" aria-atomic="true"></div>
+
 <div class="container">
 
     <div class="navbar justify-content-start pt-3 pb-0">
@@ -22,7 +26,7 @@ quantities.
         <button id="invTabBtn" class="adminButton nav-item">Inventory</button>
     </div>
     <div id="orderTab" class="order bg-candology rounded-lg p-3">
-        <table class="table table-expandable table-striped">
+        <table class="table table-expandable">
             <thead>
             <tr>
                 <th>OrderID</th>
@@ -34,7 +38,7 @@ quantities.
             </thead>
             <tbody>
             <repeat group="{{@SESSION.orders}}" value="{{ @order }}">
-                <tr>
+                <tr class="bg-opacity-50">
                     <td>{{ @order["order"]["order_id"] }}</td>
                     <td>{{ @order["order"]["name"] }}</td>
                     <td>{{ @order["order"]["date"] }}</td>
@@ -109,11 +113,47 @@ quantities.
     </div>
     <div id="invTab" class="order bg-candology rounded-lg p-3 d-none">
         <h2>Inventory</h2>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Name</th>
+                <th>Product Type</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <repeat group="{{ @products }}" value="{{ @product }}">
+                <tr>
+                    <td>{{ @product->getProductId() }}</td>
+                    <td>{{ @product->getProductName() }}</td>
+                    <td>
+                        <check if="{{ @product instanceof Candle }}">
+                            <true>Candle</true>
+                            <false>Diffuser</false>
+                        </check>
+                    </td>
+                    <td>{{ @product->getProductDescription() }}</td>
+                    <td>
+                        <div class="input-group">
+                            <input type="number" class="form-control max-w-50 product-qty" aria-label="Quantity in stock"
+                                   name="{{ @product->getProductId() }}" value="{{ @product->getProductQTY() }}">
+                        </div>
+                    </td>
+                    <td>{{ @product->getPrice() }}</td>
+                </tr>
+            </repeat>
+            </tbody>
+        </table>
+        <div id="test"></div>
     </div>
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery.js"></script>
 <script src="scripts/bootstrap-table-expandable.js"></script>
 <script src="scripts/admin-tab-switch.js"></script>
+<script src="scripts/display-button-on-focus.js"></script>
 </body>
 </html>
