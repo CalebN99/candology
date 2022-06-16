@@ -43,7 +43,16 @@
                             <check if="{{ isset(@errors['qty']) }}">
                                 <span class="text-danger">{{ @errors['qty'] }}</span>
                             </check>
-                            <p>{{ @product->getProductQTY() }} available</p>
+                            <check if="{{ @product->getProductQTY() <= 0}}">
+                                <true>
+                                    <p class="font-weight-bold">Product Back-Ordered</p>
+                                </true>
+                                <false>
+                                    <p>{{ @product->getProductQTY() }} available</p>
+                                </false>
+
+                            </check>
+
                             <input type="hidden" name="id" value="{{ @product->getProductId() }}">
                         </div>
                         <div class="form-group row ">

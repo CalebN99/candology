@@ -10,6 +10,10 @@ class Controller
         $this->_f3 = $f3;
     }
 
+    /**
+     * Method to load home view
+     * @return void
+     */
     function home()
     {
         if (isset($_SESSION['successMessage'])) {
@@ -178,6 +182,10 @@ class Controller
         echo $view->render('views/createAccount.html');
     }
 
+    /**
+     * Method to load account summary view and login if created account from cart checkout
+     * @return void
+     */
     function accountSummary()
     {
         // Create Account
@@ -216,13 +224,20 @@ class Controller
         echo $view->render('views/browseProducts.html');
     }
 
+    /**
+     * Method to load about us view
+     * @return void
+     */
     function aboutUs()
     {
         $view = new Template();
         echo $view->render('views/about_us.html');
     }
 
-
+    /**
+     * Method to load the contact_us view
+     * @return void
+     */
     function contactUs()
     {
         $view = new Template();
@@ -323,6 +338,7 @@ class Controller
     }
 
     /**
+     * Method loads checkout view if cart is not empty
      * @return void
      */
     function checkout()
@@ -389,6 +405,10 @@ class Controller
         }
     }
 
+    /**
+     * Function to load Ajax php script
+     * @return void
+     */
     function adminQuantityUpdate()
     {
         if(!($_SESSION['user'] instanceof Admin)) {

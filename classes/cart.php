@@ -12,6 +12,10 @@ class Cart
 //    }
 //
 
+    /**
+     * Checks if products exists then adds it to our $_cart variable
+     * @return void
+     */
     function addProduct($id, $qty, $scent=NULL)
     {
         $prod = $GLOBALS['datalayer']->getProduct($id);
@@ -22,11 +26,19 @@ class Cart
         $this->_cart[] = ["prod"=>$prod, "qty"=>$qty];
     }
 
+    /**
+     * Method to return $_cart variable
+     * @return $_cart
+     */
     function getCart()
     {
         return $this->_cart;
     }
 
+    /**
+     * Method that loops through all orders in cart and returns total cost
+     * @return $total - Integer
+     */
     function getTotal()
     {
         $total = 0;
@@ -38,6 +50,10 @@ class Cart
          return $total;
     }
 
+    /**
+     * Method that loops through all products in cart and returns total amount of items in cart
+     * @return $total - Integer
+     */
     function getTotalProducts()
     {
         $total = 0;

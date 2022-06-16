@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * User class
+ */
 class User
 {
     private $_fname;
@@ -16,7 +19,10 @@ class User
     private $_cardExpYear;
     private $_cvv;
 
-    // CONSTRUCTOR
+    /**
+     * Constructor for User class
+     * @return void
+     */
     public function __construct($fname, $lname, $userId, $email, $street, $address2, $city, $zip, $state, $cardNum, $cardExpMonth, $cardExpYear, $cvv) {
         $this->_fname = $fname;
         $this->_lname = $lname;
@@ -35,6 +41,7 @@ class User
     }
 
     /**
+     * Method to return $_fname variable
      * @return mixed
      */
     function getFName() {
@@ -42,6 +49,7 @@ class User
     }
 
     /**
+     * Method to return $_lname variable
      * @return mixed
      */
     function getLName() {
@@ -49,6 +57,7 @@ class User
     }
 
     /**
+     * Method to return $_userId variable
      * @return mixed
      */
     function getuserId() {
@@ -56,6 +65,7 @@ class User
     }
 
     /**
+     * Method to return $_email variable
      * @return mixed
      */
     function getEmail() {
@@ -63,6 +73,7 @@ class User
     }
 
     /**
+     * Method to return $_street variable
      * @return mixed
      */
     function getStreet() {
@@ -70,6 +81,7 @@ class User
     }
 
     /**
+     * Method to return $_address2 variable
      * @return mixed
      */
     function getAddress2() {
@@ -83,6 +95,7 @@ class User
     }
 
     /**
+     * Method to return $_city variable
      * @return mixed
      */
     function getCity() {
@@ -90,6 +103,7 @@ class User
     }
 
     /**
+     * Method to return $_zip variable
      * @return mixed
      */
     function getZip() {
@@ -97,6 +111,7 @@ class User
     }
 
     /**
+     * Method to return $_state variable
      * @return mixed
      */
     function getState() {
@@ -104,6 +119,7 @@ class User
     }
 
     /**
+     * Method to return $_cardNum variable
      * @return mixed
      */
     function getCardNum() {
@@ -111,6 +127,7 @@ class User
     }
 
     /**
+     * Method to return $_cardExpMonth variable
      * @return mixed
      */
     function getCardExpMonth() {
@@ -118,6 +135,7 @@ class User
     }
 
     /**
+     * Method to return $_cardExpYear variable
      * @return mixed
      */
     function getCardExpYear() {
@@ -125,6 +143,7 @@ class User
     }
 
     /**
+     * Method to return $_cvv variable
      * @return mixed
      */
     function getCVV() {
