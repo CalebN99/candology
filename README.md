@@ -16,5 +16,5 @@ Admin password: @dm1n
 7. To DO: Check for doc blocks and comments
 8. Create account form has full validation in Javascript and PHP.
 9. To Do: Check code is clean and well-commented
-10. We worked so hard
+10. We learned some new bootstrap features, learned and implemented some more complicated SQL queries than our other projects. We got the minimum amount of features we wanted complete.
 11. Using Ajax for an admin feature, display-button-on-focus in the scripts folder .loads a route that calls a PHP script to update database with POST data passed from the javascript script.
