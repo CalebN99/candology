@@ -1,17 +1,11 @@
 <?php
 /**
- * DataLayer class
+ * DataLayer class. Encapsulates Database interactions using PDO objects and
+ * prepared statements.
  */
 class DataLayer
 {
-
-    /**
-     * @var PDO
-     *
-     */
     private $_dbh;
-
-    // DataLayer constructor
 
     /**
      * Constructor for DataLayer
@@ -32,12 +26,11 @@ class DataLayer
      */
     function createAccount()
     {
-
+        // Query to insert account into database
         $sql = "INSERT INTO userAccounts (fname, lname, email, password, street, address2, city, zip, state, cardNum, cardExpMonth, cardExpYear, cvv) 
         VALUES (:fname, :lname, :email, :password, :street, :address2, :city, :zip, :state, :cardNum, :cardExpMonth, :cardExpYear, :cvv)";
 
         $statement = $this->_dbh->prepare($sql);
-
 
         $statement->bindParam(':fname', $_SESSION['fname'], PDO::PARAM_STR);
         $statement->bindParam(':lname', $_SESSION['lname'], PDO::PARAM_STR);
@@ -58,7 +51,7 @@ class DataLayer
 
     /**
      * Method uses PDO to query userAccounts database table
-     * @return Product object or false
+     * @return Product|bool object or false
      */
     function login($email, $password)
     {
@@ -74,6 +67,7 @@ class DataLayer
 
         $user = $statement->fetch();
 
+        // If user is found, encapsulate data in class and return
         if (!empty($user)) {
             if ($user['admin'] == 1) {
                 return new Admin($user['userId'], $user['email']);
@@ -85,6 +79,7 @@ class DataLayer
 
         }
 
+        // User email and password not found
         return false;
     }
 

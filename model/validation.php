@@ -1,12 +1,13 @@
 <?php
 /**
- * Validation Class
+ * Validation Class for validating form data from the view pages.
  */
 class Validation {
 
     /**
      * Function to validate first name
-     * @return boolean
+     * @param string $name User first name
+     * @return boolean true if valid, false otherwise
      */
     function validFName($name): bool
     {
@@ -15,7 +16,8 @@ class Validation {
 
     /**
      * Function to validate last name
-     * @return boolean
+     * @param string $name User last name
+     * @return boolean true if valid, false otherwise
      */
     function validLName($name): bool
     {
@@ -24,81 +26,101 @@ class Validation {
 
     /**
      * Function to validate email
-     * @return boolean
+     * @param string $email user entered email
+     * @return boolean true if valid, false otherwise
      */
-    function validEmail($email) {
+    function validEmail($email)
+    {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
-     * Function to validate password
-     * @return boolean
+     * Function to validate password for account creation
+     * @param string $password new user password
+     * @return boolean true if valid, false otherwise
      */
-    function validPassword($password) {
+    function validPassword($password)
+    {
         return strlen($password) < 8;
     }
 
     /**
      * Function to validate street
-     * @return boolean
+     * @param string $street user's street address
+     * @return boolean true if valid, false otherwise
      */
-    function validStreet($street) {
-        strlen($street) < 5;
+    function validStreet($street)
+    {
+        return strlen($street) < 5;
     }
 
     /**
      * Function to validate city
-     * @return boolean
+     * @param string $city User's city address
+     * @return boolean true if valid, false otherwise
      */
-    function validCity($city) {
+    function validCity($city)
+    {
         return strlen($city) < 3;
     }
 
     /**
      * Function to validate zip
-     * @return boolean
+     * @param int $zip User's zipcode
+     * @return boolean true if valid, false otherwise
      */
-    function validZip($zip) {
+    function validZip($zip)
+    {
         return $zip < 1;
     }
 
     /**
      * Function to validate card number
-     * @return boolean
+     * @param int $cardNum 16 digit card number
+     * @return boolean true if valid, false otherwise
      */
-    function validCardNum($cardNum) {
+    function validCardNum($cardNum)
+    {
         return strlen((string)$cardNum) != 16;
     }
 
     /**
      * Function to validate expiration month
-     * @return boolean
+     * @param int $expMonth Month of card expiration
+     * @return boolean true if valid, false otherwise
      */
-    function validExpMonth($expMonth) {
+    function validExpMonth($expMonth): bool
+    {
         return $expMonth < 1 || $expMonth > 12;
     }
 
     /**
      * Function to validate expiration year
-     * @return boolean
+     * @param int $expYear Year of card expiration
+     * @return boolean true if valid, false otherwise
      */
-    function validExpYear($expYear) {
+    function validExpYear($expYear): bool
+    {
         return $expYear < 2022;
     }
 
     /**
      * Function to validate cvv
-     * @return boolean
+     * @param int $cvv Card CVV
+     * @return boolean true if valid, false otherwise
      */
-    function validCVV($cvv) {
+    function validCVV($cvv): bool
+    {
         return $cvv < 100 || $cvv > 9999;
     }
 
     /**
      * Function to validate scent
-     * @return boolean
+     * @param string $setScent scent of diffuser oil to be validated
+     * @return boolean true if valid, false otherwise
      */
-    function validateScent($setScent) {
+    function validateScent($setScent)
+    {
         $scents = $GLOBALS['datalayer']->getScents();
 
         foreach ($scents as $scent) {

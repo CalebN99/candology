@@ -1,7 +1,7 @@
 <?php
 
 /**
- * User class
+ * User class encapsulates customer information.
  */
 class User
 {
@@ -20,10 +20,11 @@ class User
     private $_cvv;
 
     /**
-     * Constructor for User class
+     * Constructor for User class, Stores customer account information
      * @return void
      */
-    public function __construct($fname, $lname, $userId, $email, $street, $address2, $city, $zip, $state, $cardNum, $cardExpMonth, $cardExpYear, $cvv) {
+    public function __construct($fname, $lname, $userId, $email, $street, $address2, $city, $zip, $state, $cardNum, $cardExpMonth, $cardExpYear, $cvv)
+    {
         $this->_fname = $fname;
         $this->_lname = $lname;
         $this->_userId = $userId;
@@ -42,17 +43,19 @@ class User
 
     /**
      * Method to return $_fname variable
-     * @return mixed
+     * @return mixed first name, null if unset
      */
-    function getFName() {
+    function getFName()
+    {
         return $this->_fname;
     }
 
     /**
      * Method to return $_lname variable
-     * @return mixed
+     * @return mixed last name, null if unset
      */
-    function getLName() {
+    function getLName()
+    {
         return $this->_lname;
     }
 
@@ -60,7 +63,8 @@ class User
      * Method to return $_userId variable
      * @return mixed
      */
-    function getuserId() {
+    function getuserId()
+    {
         return $this->_userId;
     }
 
@@ -68,7 +72,8 @@ class User
      * Method to return $_email variable
      * @return mixed
      */
-    function getEmail() {
+    function getEmail()
+    {
         return $this->_email;
     }
 
@@ -76,7 +81,8 @@ class User
      * Method to return $_street variable
      * @return mixed
      */
-    function getStreet() {
+    function getStreet()
+    {
         return $this->_street;
     }
 
@@ -84,21 +90,17 @@ class User
      * Method to return $_address2 variable
      * @return mixed
      */
-    function getAddress2() {
+    function getAddress2()
+    {
         return $this->_address2;
-        //Write to database
-        //  $orderId = $GLOBALS['dataLayer']->saveDate($_SESSION['profile']);
-        // $orderIdMember = $GLOBALS['dataLayer']->saveDate($_SESSION['member']);
-
-        // $this->_f3->set('orderId', $orderId);
-        // $this->_f3->set('orderIdMember', $orderIdMember);
     }
 
     /**
      * Method to return $_city variable
      * @return mixed
      */
-    function getCity() {
+    function getCity()
+    {
         return $this->_city;
     }
 
@@ -106,7 +108,8 @@ class User
      * Method to return $_zip variable
      * @return mixed
      */
-    function getZip() {
+    function getZip()
+    {
         return $this->_zip;
     }
 
@@ -114,7 +117,8 @@ class User
      * Method to return $_state variable
      * @return mixed
      */
-    function getState() {
+    function getState()
+    {
         return $this->_state;
     }
 
@@ -122,7 +126,8 @@ class User
      * Method to return $_cardNum variable
      * @return mixed
      */
-    function getCardNum() {
+    function getCardNum()
+    {
         return $this->_cardNum;
     }
 
@@ -130,7 +135,8 @@ class User
      * Method to return $_cardExpMonth variable
      * @return mixed
      */
-    function getCardExpMonth() {
+    function getCardExpMonth()
+    {
         return $this->_cardExpMonth;
     }
 
@@ -138,7 +144,8 @@ class User
      * Method to return $_cardExpYear variable
      * @return mixed
      */
-    function getCardExpYear() {
+    function getCardExpYear()
+    {
         return $this->_cardExpYear;
     }
 
@@ -146,7 +153,8 @@ class User
      * Method to return $_cvv variable
      * @return mixed
      */
-    function getCVV() {
+    function getCVV()
+    {
         return $this->_cvv;
     }
 

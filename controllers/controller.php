@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * The Controller handles the rendering of view pages and processing of view
+ * page-server interactions.
+ */
 class Controller
 {
-
     private $_f3;
 
+    /**
+     * Constructor for the Controller. Instantiates the Fat-Free hive.
+     * @param $f3 Fat-Free Templating object
+     */
     function __construct($f3)
     {
         $this->_f3 = $f3;
@@ -16,10 +23,15 @@ class Controller
      */
     function home()
     {
+        // Load a confirmation message into the hive if it exists
         if (isset($_SESSION['successMessage'])) {
             $this->_f3->set('success', $_SESSION['successMessage']);
+
+            // Then clear message to prevent re-notification
             $_SESSION['successMessage'] = null;
         }
+
+        // Render Home page
         $view = new Template();
         echo $view->render('views/home.html');
     }
@@ -64,7 +76,11 @@ class Controller
         header('Location: ' . $this->_f3['BASE']);
     }
 
-
+    /**
+     * Method to render the Create Account page. Interfaces user input with
+     * validation and stores the user account data.
+     * @return void
+     */
     function createAccount()
     {
 
@@ -176,6 +192,7 @@ class Controller
             }
         }
 
+        // Store states in hive for form
         $this->_f3->set('states', DataLayer::getStatesMap());
 
         $view = new Template();
@@ -208,16 +225,18 @@ class Controller
     /**
      * Method to Route the user to the browse products page. Displays all
      * passed products.
-     *
+     * @param array $products products to load on the page
      * @return void
      */
     function ourCollections($products)
     {
+        // Load a confirmation message into the hive if it exists
         if (isset($_SESSION['successMessage'])) {
             $this->_f3->set('success', $_SESSION['successMessage']);
             $_SESSION['successMessage'] = null;
         }
 
+        // Store the products in hive to be accessed in the view
         $this->_f3->set('products', $products);
 
         $view = new Template();
@@ -253,7 +272,6 @@ class Controller
     {
         // If request method is not post Redirect to collections
         if ($_SERVER['REQUEST_METHOD'] != "POST") {
-
             header("location: our_collections");
         }
 
@@ -284,7 +302,7 @@ class Controller
                 }
             }
 
-
+            // Validate requested product quantity
             if ($_POST['qty'] < 1) {
                 $this->_f3->set('errors["qty"]', 'Invalid Quantity');
             } else if ($_POST['qty'] > $prod->getProductQTY()) {
@@ -406,7 +424,7 @@ class Controller
     }
 
     /**
-     * Function to load Ajax php script
+     * Function to load Ajax php script that updates an inventory quantity
      * @return void
      */
     function adminQuantityUpdate()

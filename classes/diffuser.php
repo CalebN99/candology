@@ -1,12 +1,21 @@
 <?php
 
-// Diffuser Class extends Product class
+/**
+ * Diffuser is a Product that has a scent option when purchasing.
+ */
 class Diffuser extends Product
 {
-    private $_scent;
+    private string $_scent;
 
     /**
-     * Constructor for Diffuser that calls parent constructor
+     * Constructor for Diffuser. Calls parent constructor and sets scent option
+     *
+     * @param int $productId Product ID of the diffuser
+     * @param string $productName Name of the diffuser product
+     * @param string $productDescription Description of product
+     * @param int $productQTY Quantity of product in stock
+     * @param float $price Unit price of product
+     * @param string $scent Selected oil scent for diffuser
      * @return void
      */
     public function __construct($productId, $productName, $productDescription, $productQTY, $price, $scent)
@@ -16,8 +25,8 @@ class Diffuser extends Product
     }
 
     /**
-     * Method to return $_scent variable
-     * @return $_scent - String
+     * Method to return the scent of the diffuser oil
+     * @return string scent of the diffuser oil
      */
     function getScent()
     {
@@ -26,9 +35,11 @@ class Diffuser extends Product
 
     /**
      * Method that takes parameter and sets $_scent variable to parameter
+     * @param string $scent selected scent of the diffuser oil
      * @return void
      */
-    function setScent($scent) {
+    function setScent($scent)
+    {
         $this->_scent = $scent;
     }
 }
