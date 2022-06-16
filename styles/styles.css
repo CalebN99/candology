@@ -195,6 +195,6 @@ input[type=submit]:hover {
 .max-w-50 {
     max-width: 80px;
 }
-.bg-opacity-50 {
+.bg-candology-dark {
     background: rgba(181, 162, 148, .75);
 }

@@ -302,7 +302,11 @@ class DataLayer
         }
     }
 
-
+    /**
+     * Method to get an array of scents from the database. User can select a
+     * a scent for their diffuser.
+     * @return array of scents
+     */
     function getScents()
     {
         $sql = "SELECT scent FROM scents";
@@ -384,6 +388,22 @@ class DataLayer
         for($i = 0; $i < sizeof($_SESSION["orders"]); $i++) {
             $_SESSION["orders"][$i]["order"]["payment"] = explode(" ", $_SESSION["orders"][$i]["order"]["payment"]);
         }
+    }
+
+    /**
+     * Method to fulfill an order given an order ID.
+     * @param int $id OrderID of order to be fulfilled
+     * @return void
+     */
+    function fulfillOrder($id)
+    {
+        $sql = "UPDATE orders SET fulfilled = 1 WHERE order_id = :id";
+
+        $statement = $this->_dbh->prepare($sql);
+
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+
+        $statement->execute();
     }
 
     /**

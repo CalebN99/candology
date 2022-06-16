@@ -369,6 +369,16 @@ class Controller
             header('Location: ' . $this->_f3['BASE']);
         }
         else {
+
+            // Check for POST (Order was fulfilled)
+            if ($_SERVER['REQUEST_METHOD'] == "POST") {
+                // Get OrderId
+                $orderID = $_POST['orderId'];
+
+                // Fulfill Order
+                $GLOBALS['datalayer']->fulfillOrder($orderID);
+            }
+
             // Puts the orders in SESSION['orders']
             $GLOBALS['datalayer']->getAllOrders();
 
