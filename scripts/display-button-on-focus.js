@@ -34,7 +34,7 @@ for (let i = 0; i < quantityInputs.length; i++) {
 
             // Add classes (styles) to button
             button.classList.add("btn");
-            button.classList.add("bg-light");
+            button.classList.add("bg-success");
 
             // Append button to button div
             buttonDiv.appendChild(button);
